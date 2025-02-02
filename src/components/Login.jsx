@@ -1,76 +1,81 @@
-// src/components/Login.jsx
-import React, { useState } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
+import './style.css';
 
 const Login = () => {
+    useEffect(() => {
+        // Menambahkan class khusus pada body untuk halaman login
+        document.body.classList.add('login-page');
+        // Menghapus class ketika komponen unmount
+        return () => {
+            document.body.classList.remove('login-page');
+        };
+    }, []);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        // Login untuk akun bidan
+
         if (email === 'bidandesak@klikbidandesak.com' && password === 'bidan123') {
+            localStorage.setItem('role', 'bidan');
             localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userType', 'bidan');
             navigate('/dashboard-bidan');
-        }
-        // Login untuk pasien
-        else if (email && password) {
-            const storedEmail = localStorage.getItem('patientEmail');
-            const storedPassword = localStorage.getItem('patientPassword');
-            
-            if (email === storedEmail && password === storedPassword) {
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('userType', 'pasien');
-                navigate('/dashboard-pasien');
-            } else {
-                setError('Email atau password salah!');
-            }
+        } else if (email === localStorage.getItem('patientEmail') && password === localStorage.getItem('patientPassword')) {
+            localStorage.setItem('role', 'pasien');
+            localStorage.setItem('isLoggedIn', 'true');
+            navigate('/dashboard-pasien');
         } else {
-            setError('Silakan masukkan email dan password yang valid.');
+            setError('Invalid email or password.');
         }
     };
 
     return (
-        <Container className="mt-5">
-            <h2>Login</h2>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type="email"
-                        placeholder="Masukkan email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </Form.Group>
+        <Container className="vh-100 d-flex justify-content-center align-items-center">
+            <Row className="w-100">
+                <Col xs={12} md={4} className="login-card mx-auto">
+                    <div className="card shadow-sm rounded p-4 text-start">
+                        <Image src="/img/bidandelima.png" alt="Logo" className="logo img-fluid mb-3 mx-auto d-block" style={{ width: '60px', height: 'auto' }} />
+                        <h2 className="text-center mb-4">Login Dulu Yuk Mom!</h2>
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group controlId="formBasicEmail">
+                                <Form.Label className="text-start d-block">Email</Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    placeholder="Tulis email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Masukkan password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </Form.Group>
+                            <Form.Group controlId="formBasicPassword">
+                                <Form.Label className="text-start d-block">Password</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    placeholder="Tulis password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                            </Form.Group>
 
-                {error && <p className="text-danger">{error}</p>}
+                            {error && <p className="text-danger">{error}</p>}
 
-                <Button variant="primary" type="submit">
-                    Masuk
-                </Button>
-            </Form>
-            <p>
-                Belum punya akun sebagai Pasien? <Link to="/register">Daftar di sini</Link>
-            </p>
+                            <Button variant="primary" type="submit" className="w-100 mt-3">
+                                Login
+                            </Button>
+                        </Form>
+                        <p className="text-center mt-3">
+                            Belum Punya Akun Pasien? <Link to="/register">Yuk Buat Akun!</Link>
+                        </p>
+                    </div>
+                </Col>
+            </Row>
         </Container>
     );
 };

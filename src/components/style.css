@@ -1,0 +1,42 @@
+/* Global Styles - Tanpa Background */
+body {
+    font-family: 'Times New Roman', sans-serif;
+    color: #fff;
+}
+
+/* Styling khusus untuk halaman Login dan Register */
+body.login-page, body.register-page {
+    background-image: url('/img/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Styling login dan register card */
+.login-card, .register-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50px;
+    padding: 30px;
+    margin-top: 50px;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+}
+
+.logo {
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 576px) {
+    .logo {
+        max-width: 60%;
+    }
+    .login-card, .register-card {
+        width: 90%;
+        margin: auto;
+    }
+}
