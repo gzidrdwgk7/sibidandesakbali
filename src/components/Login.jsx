@@ -15,7 +15,7 @@ const Login = () => {
         document.body.style.backgroundPosition = 'center';
         document.body.style.backgroundAttachment = 'fixed';
 
-        // Cleanup the background on component unmount (optional)
+        // Cleanup the background on component unmount
         return () => {
             document.body.style.backgroundImage = '';
         };
@@ -23,11 +23,21 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         if (email === 'bidan@klikbidandesak.com' && password === 'bidan123') {
             localStorage.setItem('isLoggedIn', 'true');
             navigate('/dashboard-bidan');
         } else {
             setError('Invalid email or password.');
+        }
+        const storedEmail = localStorage.getItem('patientEmail');
+        const storedPassword = localStorage.getItem('patientPassword');
+
+        if (email === storedEmail && password === storedPassword) {
+            localStorage.setItem('isLoggedIn', 'true'); // Flag as logged in
+            navigate('/dashboard-pasien'); // Navigate to DashboardPasien
+        } else {
+            setError('Email dan password salah atau tidak ada!'); // Show error if credentials are incorrect
         }
     };
 
@@ -36,7 +46,12 @@ const Login = () => {
             <Row className="w-100">
                 <Col xs={12} md={4} className="login-card mx-auto">
                     <div className="card shadow-sm rounded p-4 text-start">
-                        <Image src="/img/bidandelima.png" alt="Logo" className="logo img-fluid mb-3 mx-auto d-block" style={{ width: '60px', height: 'auto' }} />
+                        <Image
+                            src="/img/bidandelima.png"
+                            alt="Logo"
+                            className="logo img-fluid mb-3 mx-auto d-block"
+                            style={{ width: '60px', height: 'auto' }}
+                        />
                         <h2 className="text-center mb-4">Login Dulu Yuk Mom!</h2>
                         <Form onSubmit={handleSubmit}>
                             <Form.Group controlId="formBasicEmail">

@@ -9,6 +9,16 @@ const App = () => {
   useEffect(() => {
     // Menghapus class apapun dari body ketika aplikasi dimuat
     document.body.className = '';  
+
+    // Menambahkan class khusus hanya pada halaman login dan register
+    if (window.location.pathname === '/' || window.location.pathname === '/register') {
+      document.body.classList.add('login-register-background');
+    }
+
+    return () => {
+      // Menghapus class ketika komponen di-unmount (misalnya saat berpindah halaman)
+      document.body.classList.remove('login-register-background');
+    };
   }, []);
 
   return (

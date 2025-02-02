@@ -17,9 +17,9 @@ const Register = () => {
         document.body.style.backgroundPosition = 'center';
         document.body.style.backgroundAttachment = 'fixed';
 
-        // Cleanup the background on component unmount (optional)
+        // Cleanup the background on component unmount
         return () => {
-            document.body.style.backgroundImage = '';
+            document.body.style.backgroundImage = ''; // Reset background on unmount
         };
     }, []);
 
@@ -39,10 +39,11 @@ const Register = () => {
         setEmailError('');
 
         if (firstName && lastName && email && password) {
+            // Simulate saving registration data
             localStorage.setItem('patientEmail', email);
             localStorage.setItem('patientPassword', password);
             alert('Pendaftaran berhasil sebagai pasien!');
-            navigate('/');
+            navigate('/'); // Redirect to login page
         } else {
             alert('Silakan lengkapi semua field.');
         }
@@ -53,7 +54,12 @@ const Register = () => {
             <Row className="w-100">
                 <Col xs={12} md={4} className="register-card mx-auto">
                     <div className="card shadow-sm rounded p-4 text-start">
-                        <Image src="/img/bidandelima.png" alt="Logo" className="logo img-fluid mb-3 mx-auto d-block" style={{ width: '60px', height: 'auto' }} />
+                        <Image
+                            src="/img/bidandelima.png"
+                            alt="Logo"
+                            className="logo img-fluid mb-3 mx-auto d-block"
+                            style={{ width: '60px', height: 'auto' }}
+                        />
                         <h2 className="text-center mb-4">Daftar Dulu Yuk Mom!</h2>
                         <Form onSubmit={handleSubmit}>
                             <Form.Group controlId="formFirstName">
