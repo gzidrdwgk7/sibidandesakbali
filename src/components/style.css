@@ -1,10 +1,8 @@
-/* Global Styles - Tanpa Background */
 body {
     font-family: 'Times New Roman', sans-serif;
     color: #fff;
 }
 
-/* Styling khusus untuk halaman Login dan Register */
 body.login-page, body.register-page {
     background-image: url('/img/bg.jpg');
     background-size: cover;
@@ -12,7 +10,6 @@ body.login-page, body.register-page {
     background-attachment: fixed;
 }
 
-/* Styling login dan register card */
 .login-card, .register-card {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 50px;
