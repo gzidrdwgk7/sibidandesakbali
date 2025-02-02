@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
-import "./style.css";
 
 const Register = () => {
-    useEffect(() => {
-        // Menambahkan class khusus pada body untuk halaman register
-        document.body.classList.add('register-page');
-        // Menghapus class ketika komponen unmount
-        return () => {
-            document.body.classList.remove('register-page');
-        };
-    }, []);
-
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Set background image when register page is rendered
+        document.body.style.backgroundImage = 'url("/img/bg.jpg")';
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundAttachment = 'fixed';
+
+        // Cleanup the background on component unmount (optional)
+        return () => {
+            document.body.style.backgroundImage = '';
+        };
+    }, []);
 
     const validateEmail = (email) => {
         const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -51,7 +54,7 @@ const Register = () => {
                 <Col xs={12} md={4} className="register-card mx-auto">
                     <div className="card shadow-sm rounded p-4 text-start">
                         <Image src="/img/bidandelima.png" alt="Logo" className="logo img-fluid mb-3 mx-auto d-block" style={{ width: '60px', height: 'auto' }} />
-                        <h2 className="text-center mb-4">Daftar Dulu ya Mom!</h2>
+                        <h2 className="text-center mb-4">Daftar Dulu Yuk Mom!</h2>
                         <Form onSubmit={handleSubmit}>
                             <Form.Group controlId="formFirstName">
                                 <Form.Label className="text-start d-block">Nama Depan</Form.Label>
@@ -102,10 +105,8 @@ const Register = () => {
                                 Daftar Akun
                             </Button>
                         </Form>
-
                         <p className="text-center mt-3">
-                            <span>Sudah Punya Akun? </span>
-                            <Link to="/">Login di Sini</Link>
+                            Sudah Punya Akun? <Link to="/">Login di Sini</Link>
                         </p>
                     </div>
                 </Col>

@@ -1,34 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
-import './style.css';
 
 const Login = () => {
-    useEffect(() => {
-        // Menambahkan class khusus pada body untuk halaman login
-        document.body.classList.add('login-page');
-        // Menghapus class ketika komponen unmount
-        return () => {
-            document.body.classList.remove('login-page');
-        };
-    }, []);
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    useEffect(() => {
+        // Set background image when login page is rendered
+        document.body.style.backgroundImage = 'url("/img/bg.jpg")';
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundAttachment = 'fixed';
+
+        // Cleanup the background on component unmount (optional)
+        return () => {
+            document.body.style.backgroundImage = '';
+        };
+    }, []);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        if (email === 'bidandesak@klikbidandesak.com' && password === 'bidan123') {
-            localStorage.setItem('role', 'bidan');
+        if (email === 'bidan@klikbidandesak.com' && password === 'bidan123') {
             localStorage.setItem('isLoggedIn', 'true');
             navigate('/dashboard-bidan');
-        } else if (email === localStorage.getItem('patientEmail') && password === localStorage.getItem('patientPassword')) {
-            localStorage.setItem('role', 'pasien');
-            localStorage.setItem('isLoggedIn', 'true');
-            navigate('/dashboard-pasien');
         } else {
             setError('Invalid email or password.');
         }
