@@ -35,24 +35,24 @@ const DashboardBidan = () => {
         </Nav.Link>
       </Nav>
 
-       <div className="flex-grow-1 p-4" style={{ marginLeft: '250px' }}>
-        <Navbar bg="white" className="mb-4 px-3 shadow-sm d-flex justify-content-between align-items-center">
-          <Navbar.Brand>Pendaftaran Pasien</Navbar.Brand>
-          <div className="position-relative">
-            <NavDropdown
-              title={<img src={profilePicture} alt="Profile" style={{ width: '30px', height: '30px', borderRadius: '50%' }} />} 
-              id="profile-dropdown"
-              align="end"
-              menuVariant="light"
-              className="dropdown-menu-end"
-            >
-              <NavDropdown.Item as={Link} to="/bidan/profil">Ubah Profil</NavDropdown.Item>
-              <NavDropdown.Item href="#notifikasi">Notifikasi</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={logOut}>Log Out</NavDropdown.Item>
-            </NavDropdown>
-          </div>
-        </Navbar>
+      <div className="flex-grow-1 p-4" style={{ backgroundColor: '#f4f6f9' }}>
+                <Navbar bg="white" className="mb-4 px-3 shadow-sm d-flex justify-content-between align-items-center">
+                  <Navbar.Brand>Pendaftaran Pasien</Navbar.Brand>
+                  <div className="position-relative">
+                    <NavDropdown
+                      title={<img src={profilePicture} alt="Profile" style={{ width: '30px', height: '30px', borderRadius: '50%' }} />} 
+                      id="profile-dropdown"
+                      align="end"
+                      menuVariant="light"
+                      className="dropdown-menu-end"
+                    >
+                      <NavDropdown.Item as={Link} to="/bidan/profil">Ubah Profil</NavDropdown.Item>
+                      <NavDropdown.Item href="#notifikasi">Notifikasi</NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item onClick={logOut}>Log Out</NavDropdown.Item>
+                    </NavDropdown>
+                  </div>
+                </Navbar>
         <Row>
           <Col md={4} className="mb-4">
             <Card className="shadow-lg text-center p-4 border-0" style={{ backgroundColor: '#ffffff' }}>
