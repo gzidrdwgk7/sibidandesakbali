@@ -1,76 +1,83 @@
 import React from 'react';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Container, Row, Col, Card, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import profilePicture from '../assets/img/profile-svgrepo-com.svg'; //
+import profilePicture from '../assets/img/profile-svgrepo-com.svg';
 
 const DashboardBidan = () => {
   const navigate = useNavigate();
   const logOut = () => {
-    // Hapus data login dari localStorage
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userType');
-    // Arahkan pengguna ke halaman login
     navigate('/');
   };
 
   return (
-    <Container className="mt-5">
-      <Navbar bg="light" expand="lg">
-        <Container>
-          <Navbar.Brand href="#">Dashboard Klik Bidan Desak</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/bidan/pendaftaran">
-                Pendaftaran Pasien
-              </Nav.Link>
-              <Nav.Link as={Link} to="/bidan/pemeriksaan">
-                Pemeriksaan
-              </Nav.Link>
-              <Nav.Link as={Link} to="/bidan/persalinan">
-                Persalinan
-              </Nav.Link>
-              <Nav.Link as={Link} to="/bidan/pasca-persalinan">
-                Pasca Persalinan
-              </Nav.Link>
-              <Nav.Link as={Link} to="/bidan/laporan-rekam-medis">
-                Laporan Rekam Medis
-              </Nav.Link>
-              <Nav.Link as={Link} to="/bidan/imunisasi-bayi">
-                Imunisasi Bayi
-              </Nav.Link>
-            </Nav>
-            <Nav>
-              <NavDropdown
-                title={
-                  <img
-                    src={profilePicture}
-                    alt="Profile Picture"
-                    style={{
-                      width: '30px',
-                      height: '30px',
-                      borderRadius: '50%',
-                    }}
-                  />
-                }
-                id="profile-dropdown"
-              >
-                <NavDropdown.Item as={Link} to="/bidan/profil">
-                  Ubah Profil
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#notifikasi">
-                  Notifikasi
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item onClick={logOut}>
-                  Log Out
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </Container>
+    <div className="d-flex flex-column flex-md-row">
+      {/* Sidebar */}
+      <Nav className="flex-column p-3 bg-dark text-white vh-100 d-none d-md-block" style={{ width: '250px' }}>
+        <h4 className="text-center">Klik Bidan Desak</h4>
+        <Nav.Link as={Link} to="/bidan/pendaftaranolehbidan" className="text-white">
+          Pendaftaran Pasien
+        </Nav.Link>
+        <Nav.Link as={Link} to="/bidan/pemeriksaan" className="text-white">
+          Pemeriksaan
+        </Nav.Link>
+        <Nav.Link as={Link} to="/bidan/persalinan" className="text-white">
+          Persalinan
+        </Nav.Link>
+        <Nav.Link as={Link} to="/bidan/pasca-persalinan" className="text-white">
+          Pasca Persalinan
+        </Nav.Link>
+        <Nav.Link as={Link} to="/bidan/laporan-rekam-medis" className="text-white">
+          Laporan Rekam Medis
+        </Nav.Link>
+        <Nav.Link as={Link} to="/bidan/imunisasi-bayi" className="text-white">
+          Imunisasi Bayi
+        </Nav.Link>
+      </Nav>
+
+      {/* Main Content */}
+      <div className="flex-grow-1 p-4" style={{ backgroundColor: '#f4f6f9' }}>
+        {/* Header */}
+        <Navbar bg="white" className="mb-4 px-3 shadow-sm">
+          <Navbar.Brand>Dashboard Bidan</Navbar.Brand>
+          <Nav className="ms-auto">
+            <NavDropdown
+              title={<img src={profilePicture} alt="Profile" style={{ width: '30px', height: '30px', borderRadius: '50%' }} />}
+              id="profile-dropdown"
+            >
+              <NavDropdown.Item as={Link} to="/bidan/profil">Ubah Profil</NavDropdown.Item>
+              <NavDropdown.Item href="#notifikasi">Notifikasi</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={logOut}>Log Out</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar>
+
+        {/* Dashboard Cards */}
+        <Row>
+          <Col md={4} className="mb-4">
+            <Card className="shadow-lg text-center p-4 border-0" style={{ backgroundColor: '#ffffff' }}>
+              <h5>Total Pasien</h5>
+              <h2 className="text-dark">-</h2>
+            </Card>
+          </Col>
+          <Col md={4} className="mb-4">
+            <Card className="shadow-lg text-center p-4 border-0" style={{ backgroundColor: '#ffffff' }}>
+              <h5>Pasien Hari Ini</h5>
+              <h2 className="text-dark">-</h2>
+            </Card>
+          </Col>
+          <Col md={4} className="mb-4">
+            <Card className="shadow-lg text-center p-4 border-0" style={{ backgroundColor: '#ffffff' }}>
+              <h5>Jadwal Imunisasi</h5>
+              <h2 className="text-dark">-</h2>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    </div>
   );
 };
+
 export default DashboardBidan;

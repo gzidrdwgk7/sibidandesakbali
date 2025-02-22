@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import DashboardBidan from './components/DashboardBidan';
 import DashboardPasien from './components/DashboardPasien';
+import PendaftaranolehBidan from "./components/Bidan/PendaftaranolehBidan";
 
 const App = () => {
   useEffect(() => {
@@ -35,6 +36,10 @@ const App = () => {
         <Route 
           path="/dashboard-bidan" 
           element={<DashboardBidan />} 
+        />
+         <Route 
+          path="/bidan/pendaftaranolehbidan" 
+          element={<PendaftaranolehBidan />}
         />
         <Route 
           path="/dashboard-pasien" 
