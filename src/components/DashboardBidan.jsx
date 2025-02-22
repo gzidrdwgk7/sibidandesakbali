@@ -13,7 +13,6 @@ const DashboardBidan = () => {
 
   return (
     <div className="d-flex flex-column flex-md-row">
-      {/* Sidebar */}
       <Nav className="flex-column p-3 bg-dark text-white vh-100 d-none d-md-block" style={{ width: '250px' }}>
         <h4 className="text-center">Klik Bidan Desak</h4>
         <Nav.Link as={Link} to="/bidan/pendaftaranolehbidan" className="text-white">
@@ -36,9 +35,7 @@ const DashboardBidan = () => {
         </Nav.Link>
       </Nav>
 
-      {/* Main Content */}
       <div className="flex-grow-1 p-4" style={{ backgroundColor: '#f4f6f9' }}>
-        {/* Header */}
         <Navbar bg="white" className="mb-4 px-3 shadow-sm">
           <Navbar.Brand>Dashboard Bidan</Navbar.Brand>
           <Nav className="ms-auto">
