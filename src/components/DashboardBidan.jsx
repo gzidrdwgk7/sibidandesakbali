@@ -53,8 +53,6 @@ const DashboardBidan = () => {
             </NavDropdown>
           </Nav>
         </Navbar>
-
-        {/* Dashboard Cards */}
         <Row>
           <Col md={4} className="mb-4">
             <Card className="shadow-lg text-center p-4 border-0" style={{ backgroundColor: '#ffffff' }}>
