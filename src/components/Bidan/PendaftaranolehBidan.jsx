@@ -9,6 +9,7 @@ const PendaftaranolehBidan = () => {
     whatsapp: "",
     layanan: "",
     keluhan: "",
+    
     tanggal: "",
     jam: "",
   });
@@ -62,7 +63,7 @@ const PendaftaranolehBidan = () => {
         </Navbar>
 
         <Row className="justify-content-center">
-          <Col md={10} lg={8}>
+          <Col md={10} lg={10}>
             <Card className="shadow-lg p-4 border-0 rounded-4" style={{ backgroundColor: '#ffffff' }}>
               <h4 className="mb-3 text-center">Form Pendaftaran</h4>
               <Form onSubmit={handleSubmit}>
@@ -70,7 +71,7 @@ const PendaftaranolehBidan = () => {
                   <Col md={6}>
                     <Form.Group className="mb-3">
                       <Form.Label>Nama</Form.Label>
-                      <Form.Control type="text" name="nama" value={form.nama} onChange={handleChange} required />
+                      <Form.Control type="text" name="nama" value={form.nama} onChange={handleChange} placeholder='Tulis Nama Lengkap di Sini' required />
                     </Form.Group>
                   </Col>
                   <Col md={6}>
@@ -82,7 +83,7 @@ const PendaftaranolehBidan = () => {
                           <option value="+1">+1 (US)</option>
                           <option value="+91">+91 (IN)</option>
                         </Form.Select>
-                        <Form.Control type="text" name="whatsapp" value={form.whatsapp} onChange={handleChange} pattern="[0-9]+" required />
+                        <Form.Control type="text" name="whatsapp" value={form.whatsapp} onChange={handleChange} pattern="[0-9]+" placeholder='Tulis Nomor WA di Sini' required />
                       </div>
                     </Form.Group>
                   </Col>
@@ -99,7 +100,7 @@ const PendaftaranolehBidan = () => {
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Keluhan</Form.Label>
-                  <Form.Control as="textarea" rows={3} name="keluhan" value={form.keluhan} onChange={handleChange} required />
+                  <Form.Control as="textarea" rows={3} name="keluhan" value={form.keluhan} onChange={handleChange} placeholder='Tulis Keluhan Anda di Sini' required />
                 </Form.Group>
                 <Row>
                   <Col md={6}>
