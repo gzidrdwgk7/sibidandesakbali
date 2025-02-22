@@ -1,13 +1,13 @@
-import { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import profilePicture from "../../assets/img/profile-svgrepo-com.svg"
+import React, { useState } from 'react';
+import { Container, Row, Col, Card, Nav, Navbar, NavDropdown, Form, Button } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import profilePicture from '../../assets/img/profile-svgrepo-com.svg';
 
-export default function PendaftaranolehBidan() {
+const PendaftaranolehBidan = () => {
   const [form, setForm] = useState({
     nama: "",
-    nik: "",
+    whatsapp: "",
+    layanan: "",
     keluhan: "",
     tanggal: "",
     jam: "",
@@ -22,7 +22,6 @@ export default function PendaftaranolehBidan() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Data Pendaftaran:", form);
-    // Tambahkan logika untuk menyimpan data pendaftaran
   };
 
   const logOut = () => {
@@ -32,135 +31,99 @@ export default function PendaftaranolehBidan() {
   };
 
   return (
-    <div>
-      <Container className="mt-5">
-        <Navbar bg="light" expand="lg">
-          <Container>
-            <Navbar.Brand href="#">Dashboard Klik Bidan Desak</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                <Nav.Link as={Link} to="/bidan/pendaftaranolehbidan">
-                  Pendaftaran Pasien
-                </Nav.Link>
-                <Nav.Link as={Link} to="/bidan/pemeriksaan">
-                  Pemeriksaan
-                </Nav.Link>
-                <Nav.Link as={Link} to="/bidan/persalinan">
-                  Persalinan
-                </Nav.Link>
-                <Nav.Link as={Link} to="/bidan/pasca-persalinan">
-                  Pasca Persalinan
-                </Nav.Link>
-                <Nav.Link as={Link} to="/bidan/laporan-rekam-medis">
-                  Laporan Rekam Medis
-                </Nav.Link>
-                <Nav.Link as={Link} to="/bidan/imunisasi-bayi">
-                  Imunisasi Bayi
-                </Nav.Link>
-              </Nav>
-              <Nav>
-                <NavDropdown
-                  title={
-                    <img
-                      src={profilePicture}
-                      alt="Profile Picture"
-                      style={{
-                        width: '30px',
-                        height: '30px',
-                        borderRadius: '50%',
-                      }}
-                    />
-                  }
-                  id="profile-dropdown"
-                >
-                  <NavDropdown.Item as={Link} to="/bidan/profil">
-                    Ubah Profil
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#notifikasi">
-                    Notifikasi
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={logOut}>
-                    Log Out
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </Container>
+    <div className="d-flex" style={{ minHeight: '100vh', backgroundColor: '#f4f6f9' }}>
+      <Nav className="flex-column p-3 bg-dark text-white position-fixed vh-100 overflow-auto" style={{ width: '250px' }}>
+        <h4 className="text-center">Klik Bidan Desak</h4>
+        <Nav.Link as={Link} to="/bidan/pendaftaranolehbidan" className="text-white">Pendaftaran Pasien</Nav.Link>
+        <Nav.Link as={Link} to="/bidan/pemeriksaan" className="text-white">Pemeriksaan</Nav.Link>
+        <Nav.Link as={Link} to="/bidan/persalinan" className="text-white">Persalinan</Nav.Link>
+        <Nav.Link as={Link} to="/bidan/pasca-persalinan" className="text-white">Pasca Persalinan</Nav.Link>
+        <Nav.Link as={Link} to="/bidan/laporan-rekam-medis" className="text-white">Laporan Rekam Medis</Nav.Link>
+        <Nav.Link as={Link} to="/bidan/imunisasi-bayi" className="text-white">Imunisasi Bayi</Nav.Link>
+      </Nav>
 
-      <Container className="mt-5">
-        <h1 className="mb-4">Pendaftaran Pasien</h1>
-        <div className="card">
-          <div className="card-body">
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label className="form-label">Nama</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="nama"
-                  value={form.nama}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">NIK</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="nik"
-                  value={form.nik}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Keluhan</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="keluhan"
-                  value={form.keluhan}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Tanggal</label>
-                <input
-                  type=" date"
-                  className="form-control"
-                  name="tanggal"
-                  value={form.tanggal}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Jam</label>
-                <input
-                  type="time"
-                  className="form-control"
-                  name="jam"
-                  value={form.jam}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <button type="submit" className="btn btn-primary w-100">
-                Daftarkan Pasien
-              </button>
-            </form>
-            <button className="btn btn-outline-secondary w-100 mt-3">
-              Lihat Jadwal Terkini
-            </button>
+      <div className="flex-grow-1 p-4" style={{ marginLeft: '250px' }}>
+        <Navbar bg="white" className="mb-4 px-3 shadow-sm d-flex justify-content-between align-items-center">
+          <Navbar.Brand>Pendaftaran Pasien</Navbar.Brand>
+          <div className="position-relative">
+            <NavDropdown
+              title={<img src={profilePicture} alt="Profile" style={{ width: '30px', height: '30px', borderRadius: '50%' }} />} 
+              id="profile-dropdown"
+              align="end"
+              menuVariant="light"
+              className="dropdown-menu-end"
+            >
+              <NavDropdown.Item as={Link} to="/bidan/profil">Ubah Profil</NavDropdown.Item>
+              <NavDropdown.Item href="#notifikasi">Notifikasi</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={logOut}>Log Out</NavDropdown.Item>
+            </NavDropdown>
           </div>
-        </div>
-      </Container>
+        </Navbar>
+
+        <Row className="justify-content-center">
+          <Col md={10} lg={8}>
+            <Card className="shadow-lg p-4 border-0 rounded-4" style={{ backgroundColor: '#ffffff' }}>
+              <h4 className="mb-3 text-center">Form Pendaftaran</h4>
+              <Form onSubmit={handleSubmit}>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Nama</Form.Label>
+                      <Form.Control type="text" name="nama" value={form.nama} onChange={handleChange} required />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Nomor WhatsApp</Form.Label>
+                      <div className="d-flex">
+                        <Form.Select className="me-2" style={{ width: '35%' }}>
+                          <option value="+62">+62 (ID)</option>
+                          <option value="+1">+1 (US)</option>
+                          <option value="+91">+91 (IN)</option>
+                        </Form.Select>
+                        <Form.Control type="text" name="whatsapp" value={form.whatsapp} onChange={handleChange} pattern="[0-9]+" required />
+                      </div>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Form.Group className="mb-3">
+                  <Form.Label>Layanan</Form.Label>
+                  <Form.Select name="layanan" value={form.layanan} onChange={handleChange} required>
+                    <option value="">Pilih Layanan</option>
+                    <option value="Pemeriksaan">Pemeriksaan</option>
+                    <option value="Persalinan">Persalinan</option>
+                    <option value="Pasca Persalinan">Pasca Persalinan</option>
+                    <option value="Imunisasi Bayi">Imunisasi Bayi</option>
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Keluhan</Form.Label>
+                  <Form.Control as="textarea" rows={3} name="keluhan" value={form.keluhan} onChange={handleChange} required />
+                </Form.Group>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Tanggal</Form.Label>
+                      <Form.Control type="date" name="tanggal" value={form.tanggal} onChange={handleChange} required />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Jam</Form.Label>
+                      <Form.Control type="time" name="jam" value={form.jam} onChange={handleChange} required />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Button type="submit" className="w-100 btn-dark">Daftarkan Pasien</Button>
+              </Form>
+              <Button variant="outline-secondary" className="w-100 mt-3">Lihat Jadwal Terkini</Button>
+            </Card>
+          </Col>
+        </Row>
+      </div>
     </div>
   );
-}
+};
+
+export default PendaftaranolehBidan;
