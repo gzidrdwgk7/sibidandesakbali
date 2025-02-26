@@ -5,6 +5,8 @@ import Register from './components/Register';
 import DashboardBidan from './components/DashboardBidan';
 import DashboardPasien from './components/DashboardPasien';
 import PendaftaranolehBidan from "./components/Bidan/PendaftaranolehBidan";
+import DataPasien from './components/Bidan/DataPasien';
+import DataPasien from './components/Bidan/AntrianPasien';
 
 const App = () => {
   useEffect(() => {
@@ -40,6 +42,14 @@ const App = () => {
          <Route 
           path="/bidan/pendaftaranolehbidan" 
           element={<PendaftaranolehBidan />}
+        />
+         <Route 
+          path="bidan/datapasien" 
+          element={<DataPasien />} 
+        />
+        <Route 
+          path="/bidan/antrianpasien" 
+          element={<AntrianPasien />}
         />
         <Route 
           path="/dashboard-pasien" 
