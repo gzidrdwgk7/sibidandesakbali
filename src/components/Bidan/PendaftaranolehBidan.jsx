@@ -36,6 +36,8 @@ const PendaftaranolehBidan = () => {
       <Nav className="flex-column p-3 bg-dark text-white position-fixed vh-100 overflow-auto" style={{ width: '250px' }}>
         <h4 className="text-center">Klik Bidan Desak</h4>
         <Nav.Link as={Link} to="/bidan/pendaftaranolehbidan" className="text-white">Pendaftaran Pasien</Nav.Link>
+         <Nav.Link as={Link} to="/bidan/datapasien" className="text-white">Data Pasien</Nav.Link>
+        <Nav.Link as={Link} to="/bidan/antrianpasien" className="text-white">Antrian Pasien</Nav.Link>
         <Nav.Link as={Link} to="/bidan/pemeriksaan" className="text-white">Pemeriksaan</Nav.Link>
         <Nav.Link as={Link} to="/bidan/persalinan" className="text-white">Persalinan</Nav.Link>
         <Nav.Link as={Link} to="/bidan/pasca-persalinan" className="text-white">Pasca Persalinan</Nav.Link>

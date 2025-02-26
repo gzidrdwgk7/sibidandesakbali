@@ -18,6 +18,12 @@ const DashboardBidan = () => {
         <Nav.Link as={Link} to="/bidan/pendaftaranolehbidan" className="text-white">
           Pendaftaran Pasien
         </Nav.Link>
+        <Nav.Link as={Link} to="/bidan/datapasien" className="text-white">
+          Data Pasien
+        </Nav.Link>
+        <Nav.Link as={Link} to="/bidan/antrianpasien" className="text-white">
+          Antrian Pasien
+        </Nav.Link>
         <Nav.Link as={Link} to="/bidan/pemeriksaan" className="text-white">
           Pemeriksaan
         </Nav.Link>
