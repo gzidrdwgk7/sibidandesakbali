@@ -120,7 +120,7 @@ const PendaftaranolehBidan = () => {
                 </Row>
                 <Button type="submit" className="w-100 btn-dark">Daftarkan Pasien</Button>
               </Form>
-              <Button variant="outline-secondary" className="w-100 mt-3">Lihat Jadwal Terkini</Button>
+              <Button variant="outline-secondary" className="w-100 mt-3" as={Link} to ="/Bidan/AntrianPasien">Lihat Jadwal Terkini</Button>
             </Card>
           </Col>
         </Row>

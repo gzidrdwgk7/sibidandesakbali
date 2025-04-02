@@ -6,7 +6,7 @@ import DashboardBidan from './components/DashboardBidan';
 import DashboardPasien from './components/DashboardPasien';
 import PendaftaranolehBidan from "./components/Bidan/PendaftaranolehBidan";
 import DataPasien from './components/Bidan/DataPasien';
-import DataPasien from './components/Bidan/AntrianPasien';
+import AntrianPasien from './components/Bidan/AntrianPasien';
 
 const App = () => {
   useEffect(() => {
