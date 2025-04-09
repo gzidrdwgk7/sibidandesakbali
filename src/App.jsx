@@ -7,6 +7,7 @@ import DashboardPasien from './components/DashboardPasien';
 import PendaftaranolehBidan from "./components/Bidan/PendaftaranolehBidan";
 import DataPasien from './components/Bidan/DataPasien';
 import AntrianPasien from './components/Bidan/AntrianPasien';
+import KalenderAntrianPasien from './components/Bidan/KalenderAntrianPasien';
 
 const App = () => {
   useEffect(() => {
@@ -39,21 +40,25 @@ const App = () => {
           path="/dashboard-bidan" 
           element={<DashboardBidan />} 
         />
-         <Route 
+        <Route 
           path="/bidan/pendaftaranolehbidan" 
-          element={<PendaftaranolehBidan />}
+          element={<PendaftaranolehBidan />} 
         />
-         <Route 
-          path="bidan/datapasien" 
+        <Route 
+          path="/bidan/datapasien" 
           element={<DataPasien />} 
         />
         <Route 
           path="/bidan/antrianpasien" 
-          element={<AntrianPasien />}
+          element={<AntrianPasien />} 
         />
         <Route 
           path="/dashboard-pasien" 
           element={<DashboardPasien />} 
+        />
+        <Route 
+          path="/bidan/kalenderantrianpasien" 
+          element={<KalenderAntrianPasien />} 
         />
       </Routes>
     </div>
