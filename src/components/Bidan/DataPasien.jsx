@@ -1,3 +1,5 @@
+/*sepertinya fitur ini tidak digunakan
+
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Table, Nav, Navbar, NavDropdown, Dropdown, Form, FormControl, InputGroup, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -28,7 +30,7 @@ const DataPasien = () => {
 
   return (
     <div className="d-flex">
-      {/* Sidebar */}
+      {/* Sidebar }
       <Nav
               className="flex-column p-3"
               style={{
@@ -87,7 +89,7 @@ const DataPasien = () => {
         >
           <FaTachometerAlt className="me-2" /> {sidebarOpen ? 'Dashboard Bidan' : ''}
         </Nav.Link>
-        {/* Tombol Modal */}
+        {/* Tombol Modal}
         <Nav.Link onClick={() => setShowModal(true)} className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
           <FaUserPlus className="me-2" /> {sidebarOpen ? "Pendaftaran Pasien" : ""} 
         </Nav.Link>
@@ -149,7 +151,7 @@ const DataPasien = () => {
                </Nav.Link>
       </Nav>
 
-      {/* Konten */}
+      {/* Konten }
       <div
              className="flex-grow-1 p-4"
              style={{
@@ -214,7 +216,7 @@ const DataPasien = () => {
           </Row>
         </Container>
 
-        {/* MODAL POP UP PENDAFTARAN PASIEN */}
+        {/* MODAL POP UP PENDAFTARAN PASIEN }
         <Modal show={showModal} onHide={() => setShowModal(false)} size="xl">
           <Modal.Header closeButton>
             <Modal.Title>Pendaftaran Pasien Baru</Modal.Title>
@@ -229,3 +231,4 @@ const DataPasien = () => {
 };
 
 export default DataPasien;
+*/

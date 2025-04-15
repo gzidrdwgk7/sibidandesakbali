@@ -139,14 +139,6 @@ const DashboardBidan = () => {
 </Nav.Link>
         <Nav.Link
           as={Link}
-          to="/bidan/datapasien"
-          className="fw-semibold mb-3 pb-3 border-bottom"
-          style={{ color: primaryColor }}
-        >
-          <FaUsers className="me-2" /> {sidebarOpen ? 'Data Pasien' : ''} 
-        </Nav.Link>
-        <Nav.Link
-          as={Link}
           to="/bidan/antrianpasien"
           className="fw-semibold mb-3 pb-3 border-bottom"
           style={{ color: primaryColor }}
