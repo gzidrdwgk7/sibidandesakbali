@@ -8,6 +8,7 @@ import PendaftaranolehBidan from "./components/Bidan/PendaftaranolehBidan";
 import AntrianPasien from './components/Bidan/AntrianPasien';
 import KalenderAntrianPasien from './components/Bidan/KalenderAntrianPasien';
 import Pemeriksaan from './components/Bidan/Pemeriksaan';
+import Persalinan from './components/Bidan/Persalinan';
 
 const App = () => {
   useEffect(() => {
@@ -56,11 +57,14 @@ const App = () => {
           path="/dashboard-pasien" 
           element={<DashboardPasien />} 
         />
+       <Route path="/bidan/persalinan" element={<Persalinan />} />
+
         <Route 
           path="/bidan/kalenderantrianpasien" 
           element={<KalenderAntrianPasien />} 
         />
       </Routes>
+      
     </div>
   );
 };
