@@ -9,6 +9,7 @@ import AntrianPasien from './components/Bidan/AntrianPasien';
 import KalenderAntrianPasien from './components/Bidan/KalenderAntrianPasien';
 import Pemeriksaan from './components/Bidan/Pemeriksaan';
 import Persalinan from './components/Bidan/Persalinan';
+import PascaPersalinan from './components/Bidan/PascaPersalinan';
 
 const App = () => {
   useEffect(() => {
@@ -57,8 +58,14 @@ const App = () => {
           path="/dashboard-pasien" 
           element={<DashboardPasien />} 
         />
-       <Route path="/bidan/persalinan" element={<Persalinan />} />
-
+       <Route 
+       path="/bidan/persalinan" 
+       element={<Persalinan />} 
+       />
+       <Route 
+       path="/bidan/pasca-persalinan" 
+       element={<PascaPersalinan />} 
+       />
         <Route 
           path="/bidan/kalenderantrianpasien" 
           element={<KalenderAntrianPasien />} 
