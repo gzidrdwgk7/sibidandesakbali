@@ -163,7 +163,7 @@ const handleSubmit = (e) => {
 
           {step === 1 && (
             <>
-              <h3 className="mb-3">I. Identitas & Keluhan</h3>
+              <h3 className="mb-3">I. IDENTITAS DAN KELUHAN</h3>
               <Form.Group className="mb-3">
                 <Form.Label>Nama Ibu</Form.Label>
                 <Form.Control name="namaIbu" value={formData.namaIbu} onChange={handleChange} required />
@@ -189,7 +189,7 @@ const handleSubmit = (e) => {
 
           {step === 2 && (
             <>
-              <h3 className="mb-3">II. Pemeriksaan Nifas</h3>
+              <h3 className="mb-3">II. PEMERIKSAAN NIFAS</h3>
               <Form.Group className="mb-3">
                 <Form.Label>Metode Persalinan</Form.Label>
                 <Form.Control name="metodePersalinan" value={formData.metodePersalinan} onChange={handleChange} />
@@ -219,7 +219,7 @@ const handleSubmit = (e) => {
 
           {step === 3 && (
             <>
-              <h3 className="mb-3">III. Psikososial & TTV</h3>
+              <h3 className="mb-3">III. PSIKOLOSISAL DAN TTV</h3>
               <Form.Group className="mb-3">
                 <Form.Label>Perasaan Ibu</Form.Label>
                 <Form.Control as="textarea" name="perasaan" value={formData.perasaan} onChange={handleChange} />
@@ -248,7 +248,7 @@ const handleSubmit = (e) => {
                     <Button variant="secondary" onClick={prevStep} disabled={step === 1}>
                       Sebelumnya
                     </Button>
-                    {step < 3 ? (
+                    {step < 4 ? (
                       <Button variant="primary" onClick={nextStep}>
                         Selanjutnya
                       </Button>

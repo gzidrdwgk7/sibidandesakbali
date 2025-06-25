@@ -175,7 +175,7 @@ const Pemeriksaan = () => {
 <div className="shadow-lg p-4 border-0 rounded-4 bg-white">
 {step === 1 && (
         <>
-          <h4 className="mb-4">I. DATA SUBYEKTIF</h4>
+          <h4 className="mb-4">I. IDENTITAS IBU DAN SUAMI</h4>
           <Form>
             <Row className="mb-3">
             <Col><Form.Label>Hari</Form.Label><Form.Control type="text" value={currentDateTime.day} disabled /></Col>

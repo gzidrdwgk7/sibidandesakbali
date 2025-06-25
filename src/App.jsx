@@ -10,6 +10,8 @@ import KalenderAntrianPasien from './components/Bidan/KalenderAntrianPasien';
 import Pemeriksaan from './components/Bidan/Pemeriksaan';
 import Persalinan from './components/Bidan/Persalinan';
 import PascaPersalinan from './components/Bidan/PascaPersalinan';
+import ImunisasiBayi from './components/Bidan/ImunisasiBayi';
+import RekamMedis from './components/Bidan/LaporanRekamMedis';
 
 const App = () => {
   useEffect(() => {
@@ -70,6 +72,13 @@ const App = () => {
           path="/bidan/kalenderantrianpasien" 
           element={<KalenderAntrianPasien />} 
         />
+        <Route 
+          path="/bidan/laporan-rekam-medis" 
+          element={<RekamMedis  />} 
+        />
+         <Route path="/bidan/imunisasi-bayi" 
+         element={<ImunisasiBayi />} 
+         />
       </Routes>
       
     </div>
