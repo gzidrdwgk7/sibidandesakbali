@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Nav, InputGroup, Row, Col, Navbar, NavDropdown, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   FaBars, FaUserPlus, FaClipboardList, FaStethoscope, FaBaby,
   FaBookMedical, FaSyringe, FaClock, FaTachometerAlt, FaSearch,
@@ -13,6 +13,13 @@ const PascaPersalinan = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const primaryColor = '#e064ac';
   const [showModal, setShowModal] = useState(false); 
+const [daftarPasien, setDaftarPasien] = useState([]);
+const [namaPasien, setNamaPasien] = useState("");
+
+useEffect(() => {
+  const data = JSON.parse(localStorage.getItem("antrianPasien")) || [];
+  setDaftarPasien(data);
+}, []);
 
   const [formData, setFormData] = useState({
     namaIbu: '', namaSuami: '', umurIbu: '', umurSuami: '',
@@ -29,7 +36,19 @@ const PascaPersalinan = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const nextStep = () => setStep((prev) => prev + 1);
+  const nextStep = () => {
+  const currentStepForm = document.querySelectorAll(`[data-step="${step}"] input, [data-step="${step}"] textarea, [data-step="${step}"] select`);
+  
+  const isSemuaKosong = Array.from(currentStepForm).every(field => !field.value || field.value.trim() === '');
+
+  if (isSemuaKosong) {
+    alert('Harap isi data terlebih dahulu sebelum lanjut.');
+    return;
+  }
+
+  setStep(prev => prev + 1);
+};
+
   const prevStep = () => setStep((prev) => prev - 1);
 
   const logOut = () => {
@@ -38,11 +57,23 @@ const PascaPersalinan = () => {
     window.location.href = '/';
   };
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  if (step === 3) {
-    alert('Data berhasil disimpan!\n\n' + JSON.stringify(formData, null, 2));
+const navigate = useNavigate();
+const handleSubmit = () => {
+  const currentStepForm = document.querySelectorAll(
+    `[data-step="${step}"] input, [data-step="${step}"] textarea, [data-step="${step}"] select`
+  );
+
+  const isFormValid = Array.from(currentStepForm).every((el) => el.value && el.value.trim() !== '');
+
+  if (!isFormValid) {
+    alert('Harap lengkapi semua data sebelum menyimpan.');
+    return;
   }
+
+  alert('Data berhasil disimpan!');
+  setTimeout(() => {
+    navigate('/bidan/laporan-rekam-medis');
+  }, 100);
 };
 
   const formatDateTime = () => {
@@ -172,14 +203,27 @@ const handleSubmit = (e) => {
 
           {step === 1 && (
             <>
+            <div data-step="1">
               <h3 className="mb-3">I. IDENTITAS DAN KELUHAN</h3>
               <Form.Group className="mb-3">
-                <Form.Label>Nama Ibu</Form.Label>
-                <Form.Control name="namaIbu" value={formData.namaIbu} onChange={handleChange} required />
-              </Form.Group>
+  <Form.Label>Nama Pasien</Form.Label>
+  <Form.Select
+    value={namaPasien}
+    onChange={(e) => setNamaPasien(e.target.value)}
+    required
+  >
+    <option value="">Pilih Nama Pasien</option>
+    {daftarPasien.map((pasien) => (
+      <option key={pasien.id} value={pasien.nama}>
+        {pasien.nama} - {pasien.id}
+      </option>
+    ))}
+  </Form.Select>
+</Form.Group>
+
               <Form.Group className="mb-3">
                 <Form.Label>Nama Suami</Form.Label>
-                <Form.Control name="namaSuami" value={formData.namaSuami} onChange={handleChange} required />
+                <Form.Control name="namaSuami" value={formData.namaSuami} onChange={handleChange} required placeholder='Tulis nama suami'/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Umur Ibu</Form.Label>
@@ -193,11 +237,13 @@ const handleSubmit = (e) => {
                 <Form.Label>Keluhan Utama</Form.Label>
                 <Form.Control as="textarea" name="keluhan" value={formData.keluhan} onChange={handleChange} />
               </Form.Group>
+              </div>
             </>
           )}
 
           {step === 2 && (
             <>
+            <div data-step="2">
               <h3 className="mb-3">II. PEMERIKSAAN NIFAS</h3>
               <Form.Group className="mb-3">
                 <Form.Label>Metode Persalinan</Form.Label>
@@ -223,11 +269,13 @@ const handleSubmit = (e) => {
                 <Form.Label>Perencanaan KB</Form.Label>
                 <Form.Control name="rencanaKB" value={formData.rencanaKB} onChange={handleChange} />
               </Form.Group>
+              </div>
             </>
           )}
 
           {step === 3 && (
             <>
+            <div data-step="3">
               <h3 className="mb-3">III. PSIKOLOSISAL DAN TTV</h3>
               <Form.Group className="mb-3">
                 <Form.Label>Perasaan Ibu</Form.Label>
@@ -250,6 +298,7 @@ const handleSubmit = (e) => {
                 <Col><Form.Label>Nadi</Form.Label><Form.Control name="nadi" value={formData.nadi} onChange={handleChange} /></Col>
                 <Col><Form.Label>Suhu</Form.Label><Form.Control name="suhu" value={formData.suhu} onChange={handleChange} /></Col>
               </Row>
+            </div>
             </>
           )}
 
@@ -257,7 +306,7 @@ const handleSubmit = (e) => {
                     <Button variant="secondary" onClick={prevStep} disabled={step === 1}>
                       Sebelumnya
                     </Button>
-                    {step < 4 ? (
+                    {step < 3 ? (
                       <Button variant="primary" onClick={nextStep}>
                         Selanjutnya
                       </Button>

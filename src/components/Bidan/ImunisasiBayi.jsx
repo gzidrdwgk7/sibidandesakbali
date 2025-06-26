@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Nav, InputGroup, Row, Col, Navbar, NavDropdown, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   FaBars, FaUserPlus, FaClipboardList, FaStethoscope, FaBaby,
   FaBookMedical, FaSyringe, FaClock, FaTachometerAlt, FaSearch,
@@ -14,7 +14,12 @@ const ImunisasiBayi = () => {
   const primaryColor = '#e064ac';
   const [showModal, setShowModal] = useState(false); 
   const [formData, setFormData] = useState({});
-
+const [daftarPasien, setDaftarPasien] = useState([]);
+const [namaPasien, setNamaPasien] = useState("");
+useEffect(() => {
+  const data = JSON.parse(localStorage.getItem("antrianPasien")) || [];
+  setDaftarPasien(data);
+}, []);
   const [currentDateTime, setCurrentDateTime] = useState({ day: '', date: '', time: '' });
   useEffect(() => {
     const formatDateTime = () => {
@@ -43,19 +48,47 @@ const ImunisasiBayi = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const nextStep = () => setStep((prev) => prev + 1);
+ const nextStep = () => {
+  const currentStepForm = document.querySelectorAll(`[data-step="${step}"] input, [data-step="${step}"] textarea, [data-step="${step}"] select`);
+  
+  const isSemuaKosong = Array.from(currentStepForm).every(field => !field.value || field.value.trim() === '');
+
+  if (isSemuaKosong) {
+    alert('Harap isi data terlebih dahulu sebelum lanjut.');
+    return;
+  }
+
+  setStep(prev => prev + 1);
+};
   const prevStep = () => setStep((prev) => prev - 1);
-
+const navigate = useNavigate();
   const handleSubmit = () => {
-    alert('Data berhasil disimpan!\n\n' + JSON.stringify(formData, null, 2));
-  };
+  const currentStepForm = document.querySelectorAll(
+    `[data-step="${step}"] input, [data-step="${step}"] textarea, [data-step="${step}"] select`
+  );
 
+  const isFormValid = Array.from(currentStepForm).every((el) => el.value && el.value.trim() !== '');
+
+  if (!isFormValid) {
+    alert('Harap lengkapi semua data sebelum menyimpan.');
+    return;
+  }
+
+  alert('Data berhasil disimpan!');
+  setTimeout(() => {
+    navigate('/bidan/laporan-rekam-medis');
+  }, 100);
+};
   return (
     <div className="d-flex">
       <Nav className="flex-column p-3" style={{ position: 'fixed', top: 0, bottom: 0, width: sidebarOpen ? '255px' : '80px', backgroundColor: '#fff', boxShadow: '4px 0px 8px rgba(0, 0, 0, 0.2)', overflowY: 'auto', transition: 'width 0.3s' }}>
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h4 className="fw-bold mb-0" style={{ color: primaryColor }}>{sidebarOpen ? 'Imunisasi Bayi' : ''}</h4>
-          <button className="btn btn-link" onClick={() => setSidebarOpen(!sidebarOpen)} style={{ color: primaryColor }}><FaBars /></button>
+          <button className="btn btn-link"
+                     onClick={() => setSidebarOpen(!sidebarOpen)}
+                     style={{ color: primaryColor, fontSize: "20px" }}>
+                     <FaBars />
+                   </button>
         </div>
         <Form className="mb-3">
           <InputGroup className="rounded-pill border">
@@ -99,7 +132,7 @@ const ImunisasiBayi = () => {
             color: 'white'                 // warna teks
           }}
         >
-          <FaStethoscope className="me-2" /> {sidebarOpen ? 'Imunisasi Bayi' : ''}
+          <FaSyringe className="me-2" /> {sidebarOpen ? 'Imunisasi Bayi' : ''}
               </Nav.Link>
               </Nav>
         
@@ -138,10 +171,27 @@ const ImunisasiBayi = () => {
 
           {step === 1 && (
             <>
+            <div data-step="1">
               <h5 className="mb-3">I. IDENTITAS ANAK DAN ORANG TUA</h5>
               <Form.Group className="mb-3">
+  <Form.Label>Nama Pasien</Form.Label>
+  <Form.Select
+    value={namaPasien}
+    onChange={(e) => setNamaPasien(e.target.value)}
+    required
+  >
+    <option value="">Pilih Nama Pasien</option>
+    {daftarPasien.map((pasien) => (
+      <option key={pasien.id} value={pasien.nama}>
+        {pasien.nama} - {pasien.id}
+      </option>
+    ))}
+  </Form.Select>
+</Form.Group>
+
+              <Form.Group className="mb-3">
                 <Form.Label>Nama Anak</Form.Label>
-                <Form.Control name="namaAnak" value={formData.namaAnak || ''} onChange={handleChange} required />
+                <Form.Control name="namaAnak" value={formData.namaAnak || ''} onChange={handleChange} required placeholder='Tulis nama lengkap pasien'/>
               </Form.Group>
               <Row>
                 <Col>
@@ -167,83 +217,224 @@ const ImunisasiBayi = () => {
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Umur Anak (bulan)</Form.Label>
-                <Form.Control type="number" name="umurAnak" value={formData.umurAnak || ''} onChange={handleChange} required />
+                <Form.Control type="number" name="umurAnak" value={formData.umurAnak || ''} onChange={handleChange} required placeholder='Isi umur anak dalam bulan'/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Alamat Rumah</Form.Label>
-                <Form.Control name="alamat" value={formData.alamat || ''} onChange={handleChange} required />
+                <Form.Control name="alamat" value={formData.alamat || ''} onChange={handleChange} required placeholder='Isi alamat rumah pasien'/>
               </Form.Group>
+              </div>
             </>
           )}
             {step === 2 && (
             <>
+            <div data-step="2">
               <h5 className="mb-3">II. CATATAN RIWAYAT</h5>
-              <Form.Group className="mb-3">
-                <Form.Label>Riwayat Prenatal (GPA, Gestasi, ANC)</Form.Label>
-                <Form.Control as="textarea" rows={2} name="riwayatPrenatal" value={formData.riwayatPrenatal || ''} onChange={handleChange} />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Riwayat Intranatal</Form.Label>
-                <Form.Control as="textarea" rows={2} name="riwayatIntranatal" value={formData.riwayatIntranatal || ''} onChange={handleChange} />
-              </Form.Group>
-
+       <Form.Group className="mb-3">
+  <Form.Label className="mt-2">GPA</Form.Label>
+  <Form.Control
+    type="text"
+    name="gpa"
+    value={formData.gpa || ''}
+    onChange={handleChange}
+    placeholder="Contoh: G2P1A0"
+  />
+</Form.Group>
+<Form.Group className="mb-3">
+  <Form.Label className="mt-3">Masa Gestasi</Form.Label>
+  <Form.Control
+    type="text"
+    name="masaGestasi"
+    value={formData.masaGestasi || ''}
+    onChange={handleChange}
+    placeholder="Contoh: 36 minggu"
+  />
+</Form.Group>
+<Form.Group className="mb-3">
+  <Form.Label className="mt-3">Riwayat ANC</Form.Label>
+  <Form.Control
+    type="text"
+    name="riwayatANC"
+    value={formData.riwayatANC || ''}
+    onChange={handleChange}
+    placeholder="Contoh: ANC lengkap (6 kali)"
+  />
+</Form.Group>
+<Form.Group className="mb-3">
+  <Form.Label className="mt-3">Riwayat Penyakit Ibu dan Keluarga</Form.Label>
+  <Form.Control
+    as="textarea"
+    rows={3}
+    name="riwayatPenyakit"
+    value={formData.riwayatPenyakit || ''}
+    onChange={handleChange}
+    placeholder="Contoh: Tidak ada riwayat penyakit kronis pada ibu dan keluarga"
+  />
+</Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Riwayat Postnatal</Form.Label>
-                <Form.Control as="textarea" rows={2} name="riwayatPostnatal" value={formData.riwayatPostnatal || ''} onChange={handleChange} />
+                <Form.Control as="textarea" rows={2} name="riwayatPostnatal" value={formData.riwayatPostnatal || ''} onChange={handleChange} 
+                placeholder="Contoh: Ibu dalam keadaan sehat, luka perineum sembuh baik, kontrol postnatal sudah dilakukan dua kali"/>
               </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Riwayat Imunisasi</Form.Label>
-                <Form.Control as="textarea" rows={2} name="riwayatImunisasi" value={formData.riwayatImunisasi || ''} onChange={handleChange} />
-              </Form.Group>
-
               <Form.Group className="mb-3">
                 <Form.Label>Perkembangan Bayi</Form.Label>
-                <Form.Control as="textarea" rows={2} name="perkembanganBayi" value={formData.perkembanganBayi || ''} onChange={handleChange} />
+                <Form.Control as="textarea" rows={2} name="perkembanganBayi" value={formData.perkembanganBayi || ''} onChange={handleChange} 
+                placeholder="Contoh: Berat badan bertambah sesuai grafik KMS, sudah dapat tengkurap dan merespon suara"
+                />
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Data Bio, Psiko, Sosial, Spiritual</Form.Label>
-                <Form.Control as="textarea" rows={2} name="bioPsikoSosialSpiritual" value={formData.bioPsikoSosialSpiritual || ''} onChange={handleChange} />
-              </Form.Group>
+  <Form.Label className="mt-3">Psikologis</Form.Label>
+  <Form.Control
+    type="text"
+    name="psikologis"
+    value={formData.psikologis || ''}
+    onChange={handleChange}
+    placeholder="Contoh: Ibu tampak cemas menghadapi persalinan"
+  />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label className="mt-3">Sosial</Form.Label>
+  <Form.Control
+    type="text"
+    name="sosial"
+    value={formData.sosial || ''}
+    onChange={handleChange}
+    placeholder="Contoh: Didampingi suami dan keluarga"
+  />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label className="mt-3">Spiritual</Form.Label>
+  <Form.Control
+    type="text"
+    name="spiritual"
+    value={formData.spiritual || ''}
+    onChange={handleChange}
+    placeholder="Contoh: Berdoa secara rutin, percaya diri"
+  />
+</Form.Group>
+</div>
             </>
           )}
 {step === 3 && (
             <>
+            <div data-step="3">
               <h5 className="mb-3">III. KONDISI BAYI</h5>
 
-              <Form.Group className="mb-3">
-                <Form.Label>Keadaan Saat Ini (gerak, tangis, warna kulit)</Form.Label>
-                <Form.Control as="textarea" rows={2} name="keadaanSaatIni" value={formData.keadaanSaatIni || ''} onChange={handleChange} />
-              </Form.Group>
+             {/* Keadaan Saat Ini */}
+<Form.Group className="mb-3">
+  <Form.Label>Gerak Bayi</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Aktif, lemah" name="gerakBayi" value={formData.gerakBayi || ''} onChange={handleChange} />
+</Form.Group>
 
-              <Form.Group className="mb-3">
-                <Form.Label>Pemeriksaan Umum (BB, PB, LK, LD, HR, Suhu, RR)</Form.Label>
-                <Form.Control as="textarea" rows={2} name="pemeriksaanUmum" value={formData.pemeriksaanUmum || ''} onChange={handleChange} />
-              </Form.Group>
+<Form.Group className="mb-3">
+  <Form.Label>Tangis Bayi</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Kuat, lemah, tidak menangis" name="tangisBayi" value={formData.tangisBayi || ''} onChange={handleChange} />
+</Form.Group>
 
-              <Form.Group className="mb-3">
-                <Form.Label>Pemeriksaan Fisik (kepala, mata, mulut, telinga, dada, perut, genetalia, ekstremitas)</Form.Label>
-                <Form.Control as="textarea" rows={2} name="pemeriksaanFisik" value={formData.pemeriksaanFisik || ''} onChange={handleChange} />
-              </Form.Group>
+<Form.Group className="mb-3">
+  <Form.Label>Warna Kulit</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Merah muda, kebiruan" name="warnaKulit" value={formData.warnaKulit || ''} onChange={handleChange} />
+</Form.Group>
 
-              <Form.Group className="mb-3">
-                <Form.Label>Refleks (grasping, babinski, dll)</Form.Label>
-                <Form.Control as="textarea" rows={2} name="refleks" value={formData.refleks || ''} onChange={handleChange} />
-              </Form.Group>
+{/* Pemeriksaan Umum */}
+<Form.Group className="mb-3">
+  <Form.Label>Berat Badan (BB)</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: 3.2 kg" name="bb" value={formData.bb || ''} onChange={handleChange} />
+</Form.Group>
 
-              <Form.Group className="mb-3">
-                <Form.Label>Pemeriksaan Penunjang (jika ada)</Form.Label>
-                <Form.Control as="textarea" rows={2} name="pemeriksaanPenunjang" value={formData.pemeriksaanPenunjang || ''} onChange={handleChange} />
-              </Form.Group>
+<Form.Group className="mb-3">
+  <Form.Label>Panjang Badan (PB)</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: 50 cm" name="pb" value={formData.pb || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>Lingkar Kepala (LK)</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: 33 cm" name="lk" value={formData.lk || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>Lingkar Dada (LD)</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: 31 cm" name="ld" value={formData.ld || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>HR (Heart Rate)</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: 140 bpm" name="hr" value={formData.hr || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>Suhu</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: 36.5°C" name="suhu" value={formData.suhu || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>RR (Respiratory Rate)</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: 40 x/menit" name="rr" value={formData.rr || ''} onChange={handleChange} />
+</Form.Group>
+
+{/* Pemeriksaan Fisik */}
+<Form.Group className="mb-3">
+  <Form.Label>Kepala</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Normal, caput" name="kepala" value={formData.kepala || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>Mata</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Simetris, tidak bernanah" name="mata" value={formData.mata || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>Mulut</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Normal, tidak ada sariawan" name="mulut" value={formData.mulut || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>Telinga</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Simetris, tidak keluar cairan" name="telinga" value={formData.telinga || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>Dada</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Normal, simetris" name="dada" value={formData.dada || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>Perut</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Lunak, tidak kembung" name="perut" value={formData.perut || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>Genetalia</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Normal, tidak ada kelainan" name="genetalia" value={formData.genetalia || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>Ekstremitas</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Lengkap, aktif bergerak" name="ekstremitas" value={formData.ekstremitas || ''} onChange={handleChange} />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>Babinski</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Positif / Negatif" name="babinski" value={formData.babinski || ''} onChange={handleChange} />
+</Form.Group>
+
+{/* Pemeriksaan Penunjang */}
+<Form.Group className="mb-3">
+  <Form.Label>Pemeriksaan Penunjang</Form.Label>
+  <Form.Control type="text" placeholder="Contoh: Laboratorium darah, tes lainnya" name="pemeriksaanPenunjang" value={formData.pemeriksaanPenunjang || ''} onChange={handleChange} />
+</Form.Group>
+
+              </div>
             </>
           )}
 
 {step === 4 && (
   <>
+  <div data-step="4">
     <h5 className="mb-3">IV. Diagnosa dan Masalah</h5>
-
     <Form.Group className="mb-3">
       <Form.Label>Diagnosa</Form.Label>
       <Form.Control as="textarea" rows={2} name="diagnosa" value={formData.diagnosa || ''} onChange={handleChange} />
@@ -253,6 +444,7 @@ const ImunisasiBayi = () => {
       <Form.Label>Masalah</Form.Label>
       <Form.Control as="textarea" rows={2} name="masalah" value={formData.masalah || ''} onChange={handleChange} />
     </Form.Group>
+    </div>
   </>
 )}
 

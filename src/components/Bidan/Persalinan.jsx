@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Nav, InputGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Navbar, NavDropdown, Modal } from 'react-bootstrap';
 import { FaBell, FaUserCircle } from 'react-icons/fa';
 import { useEffect } from 'react';
@@ -20,6 +20,14 @@ const Persalinan = () => {
   localStorage.removeItem('userType');
   window.location.href = '/'; // atau gunakan navigate('/')
 };
+const [daftarPasien, setDaftarPasien] = useState([]);
+const [namaPasien, setNamaPasien] = useState("");
+
+useEffect(() => {
+  const data = JSON.parse(localStorage.getItem("antrianPasien")) || [];
+  setDaftarPasien(data);
+}, []);
+
   const [showModal, setShowModal] = useState(false); 
 
   const [formData, setFormData] = useState({
@@ -45,13 +53,37 @@ const Persalinan = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const nextStep = () => setStep((prev) => prev + 1);
-  const prevStep = () => setStep((prev) => prev - 1);
+ const nextStep = () => {
+  const currentStepForm = document.querySelectorAll(`[data-step="${step}"] input, [data-step="${step}"] textarea, [data-step="${step}"] select`);
+  
+  const isSemuaKosong = Array.from(currentStepForm).every(field => !field.value || field.value.trim() === '');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert('Data berhasil disimpan!\n\n' + JSON.stringify(formData, null, 2));
-  };
+  if (isSemuaKosong) {
+    alert('Harap isi data terlebih dahulu sebelum lanjut.');
+    return;
+  }
+
+  setStep(prev => prev + 1);
+};
+const prevStep = () => setStep((prev) => prev - 1);
+const navigate = useNavigate();
+ const handleSubmit = () => {
+  const currentStepForm = document.querySelectorAll(
+    `[data-step="${step}"] input, [data-step="${step}"] textarea, [data-step="${step}"] select`
+  );
+
+  const isFormValid = Array.from(currentStepForm).every((el) => el.value && el.value.trim() !== '');
+
+  if (!isFormValid) {
+    alert('Harap lengkapi semua data sebelum menyimpan.');
+    return;
+  }
+
+  alert('Data berhasil disimpan!');
+  setTimeout(() => {
+    navigate('/bidan/laporan-rekam-medis');
+  }, 100);
+};
 const [currentDateTime, setCurrentDateTime] = useState({
   day: '',
   date: '',
@@ -196,18 +228,30 @@ useEffect(() => {
 </Row>
           {step === 1 && (
             <>
-              <h4 className="mb-4">I. DATA SUBYEKTIF</h4>
+             <div data-step="1">
+              <h4 className="mb-4">I. DATA IDENTITAS IBU</h4>
               <Form.Group className="mb-3">
-                <Form.Label>Nama Ibu</Form.Label>
-                <Form.Control name="namaIbu" value={formData.namaIbu} onChange={handleChange} required />
-              </Form.Group>
+  <Form.Label>Nama Pasien</Form.Label>
+  <Form.Select
+    value={namaPasien}
+    onChange={(e) => setNamaPasien(e.target.value)}
+    required
+  >
+    <option value="">Pilih Nama Pasien</option>
+    {daftarPasien.map((pasien) => (
+      <option key={pasien.id} value={pasien.nama}>
+        {pasien.nama} - {pasien.id}
+      </option>
+    ))}
+  </Form.Select>
+</Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Umur</Form.Label>
-                <Form.Control type="number" name="umur" value={formData.umur} onChange={handleChange} required />
+                <Form.Control type="number" name="umur" value={formData.umur} onChange={handleChange} required placeholder='Tulis umur pasien'/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Alamat</Form.Label>
-                <Form.Control name="alamat" value={formData.alamat} onChange={handleChange} required />
+                <Form.Control name="alamat" value={formData.alamat} onChange={handleChange} required placeholder='Tulis alamat rumah pasien'/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>HPHT</Form.Label>
@@ -219,21 +263,23 @@ useEffect(() => {
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Golongan Darah</Form.Label>
-                <Form.Control name="golDarah" value={formData.golDarah} onChange={handleChange} required />
+                <Form.Control name="golDarah" value={formData.golDarah} onChange={handleChange} required placeholder='Tulis golongan darah pasien'/>
               </Form.Group>
+              </div>
             </>
           )}
 
           {step === 2 && (
             <>
-              <h4 className="mb-3">II. Pemeriksaan</h4>
+            <div data-step="2">
+              <h4 className="mb-3">II. PEMERIKSAAN</h4>
               <Form.Group className="mb-3">
                 <Form.Label>Keluhan Utama</Form.Label>
-                <Form.Control as="textarea" name="keluhan" value={formData.keluhan} onChange={handleChange} required />
+                <Form.Control as="textarea" name="keluhan" value={formData.keluhan} onChange={handleChange} required placeholder='Tulis keluhan utama pasien' />
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Gerakan Janin</Form.Label>
-                <Form.Select name="gerakanJanin" value={formData.gerakanJanin} onChange={handleChange} required>
+                <Form.Select name="gerakanJanin" value={formData.gerakanJanin} onChange={handleChange} required >
                   <option value="">Pilih...</option>
                   <option value="Aktif">Aktif</option>
                   <option value="Menurun">Menurun</option>
@@ -250,40 +296,52 @@ useEffect(() => {
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Presentasi Janin</Form.Label>
-                <Form.Control name="presentasi" value={formData.presentasi} onChange={handleChange} required />
+                <Form.Control name="presentasi" value={formData.presentasi} onChange={handleChange} required placeholder='Tulis presentasi janin pasien'/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Frekuensi HIS</Form.Label>
-                <Form.Control name="his" value={formData.his} onChange={handleChange} required />
+                <Form.Control name="his" value={formData.his} onChange={handleChange} required placeholder='Tulis frekuensi HIS pasien'/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Denyut Jantung Janin (DJJ)</Form.Label>
-                <Form.Control name="djj" value={formData.djj} onChange={handleChange} required />
+                <Form.Control name="djj" value={formData.djj} onChange={handleChange} required placeholder='Tulis denyut jantung janin'/>
               </Form.Group>
+              </div>
             </>
           )}
+{step === 3 && (
+  <>
+  <div data-step="3">
+    <h4 className="mb-3">III. PENATALAKSANAAN</h4>
 
-          {step === 3 && (
-            <>
-              <h4 className="mb-3">III. Penatalaksanaan</h4>
-              <Form.Group className="mb-3">
-                <Form.Label>Penolong Persalinan</Form.Label>
-                <Form.Control name="penolong" value={formData.penolong} onChange={handleChange} required />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Kondisi Ibu</Form.Label>
-                <Form.Control name="kondisiIbu" value={formData.kondisiIbu} onChange={handleChange} required />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Kondisi Bayi</Form.Label>
-                <Form.Control name="kondisiBayi" value={formData.kondisiBayi} onChange={handleChange} required />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Keterangan Tambahan</Form.Label>
-                <Form.Control as="textarea" name="keterangan" value={formData.keterangan} onChange={handleChange} />
-              </Form.Group>
-            </>
-          )}
+    <Form.Group className="mb-3">
+      <Form.Label>Kondisi Ibu</Form.Label>
+      <Form.Control
+        as="textarea"
+        rows={3}
+        name="kondisiIbu"
+        value={formData.kondisiIbu}
+        onChange={handleChange}
+        required
+        placeholder="Tulis kondisi tertentu pada pasien, contoh: Ibu dalam keadaan sadar, tekanan darah normal, tidak ditemukan komplikasi."
+      />
+    </Form.Group>
+
+    <Form.Group className="mb-3">
+      <Form.Label>Kondisi Bayi</Form.Label>
+      <Form.Control
+        as="textarea"
+        rows={3}
+        name="kondisiBayi"
+        value={formData.kondisiBayi}
+        onChange={handleChange}
+        required
+        placeholder="Tulis kondisi tertentu pada bayi pasien, contoh: Bayi lahir spontan, menangis kuat, tonus otot baik, kulit kemerahan."
+      />
+    </Form.Group>
+    </div>
+  </>
+)}
 
           {/* Tombol Navigasi */}
           <div className="d-flex justify-content-between mt-4">
@@ -314,5 +372,4 @@ useEffect(() => {
     </div>
   );
 };
-
 export default Persalinan;

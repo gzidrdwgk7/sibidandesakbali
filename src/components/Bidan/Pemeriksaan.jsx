@@ -5,7 +5,8 @@ import {
   FaBars, FaUserPlus, FaUsers, FaClipboardList, FaStethoscope, FaBaby,
   FaBookMedical, FaSyringe, FaBell, FaClock, FaTachometerAlt, FaSearch, FaUserCircle
 } from 'react-icons/fa';
-import PendaftaranolehBidan from './PendaftaranolehBidan';  // Pastikan ini di-import jika belum
+import PendaftaranolehBidan from './PendaftaranolehBidan'; 
+
 
 const Pemeriksaan = () => {
   const navigate = useNavigate();
@@ -16,13 +17,38 @@ const Pemeriksaan = () => {
   
   const [isValid, setIsValid] = useState(true);
   
-  const nextStep = () => {
-    if (validateForm()) {
-      setStep(prev => prev + 1);
+const nextStep = () => {
+  if (validateForm()) {
+    if (step === 9) {
+      const currentStep9Data = {
+        bio: bio,
+        psiko: psiko,
+        sosial: sosial,
+        spiritual: spiritual
+      };
+
+      setFormData(prevData => ({
+        ...prevData,
+        step9: currentStep9Data
+      }));
+
+      alert("Data berhasil disimpan");
+
+      // Pindah ke halaman Laporan Rekam Medis
+      navigate("/bidan/laporan-rekam-medis");
     } else {
-      alert("Harap lengkapi semua field yang wajib diisi.");
+      setStep(prev => prev + 1);
     }
-  };
+  } else {
+    alert("Harap lengkapi semua field yang wajib diisi.");
+  }
+};
+
+const [formData, setFormData] = useState({});
+const [bio, setBio] = useState("");
+const [psiko, setPsiko] = useState("");
+const [sosial, setSosial] = useState("");
+const [spiritual, setSpiritual] = useState("");
 
   const prevStep = () => setStep((prev) => prev - 1);
 
@@ -68,12 +94,19 @@ const Pemeriksaan = () => {
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
 
-    const day = now.toLocaleDateString('id-ID', dayOptions);  // day in Indonesian
-    const date = now.toLocaleDateString('id-ID', dateOptions);  // date in Indonesian
-    const time = now.toLocaleTimeString('id-ID', timeOptions);  // time in Indonesian
+    const day = now.toLocaleDateString('id-ID', dayOptions); 
+    const date = now.toLocaleDateString('id-ID', dateOptions);  
+    const time = now.toLocaleTimeString('id-ID', timeOptions);  
 
     setCurrentDateTime({ day, date, time });
   };
+const [daftarPasien, setDaftarPasien] = useState([]);
+const [namaPasien, setNamaPasien] = useState("");
+
+useEffect(() => {
+  const data = JSON.parse(localStorage.getItem("antrianPasien")) || [];
+  setDaftarPasien(data);
+}, []);
 
   // Set the current date and time on component mount
   useEffect(() => {
@@ -141,7 +174,7 @@ const Pemeriksaan = () => {
   }}
 >
   <FaStethoscope className="me-2" /> {sidebarOpen ? 'Pemeriksaan' : ''}
-</Nav.Link>
+      </Nav.Link>
         <Nav.Link as={Link} to="/bidan/persalinan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
           <FaBaby className="me-2" /> {sidebarOpen ? 'Persalinan' : ''}
         </Nav.Link>
@@ -193,8 +226,24 @@ const Pemeriksaan = () => {
 
             <h5 className="mt-4">Identitas Ibu</h5>
             <Row className="mb-3">
-              <Col><Form.Label>Nama</Form.Label><Form.Control required /></Col>
-              <Col><Form.Label>Umur</Form.Label><Form.Control required /></Col>
+            <Form.Group className="mb-3">
+  <Form.Label>Nama Pasien</Form.Label>
+  <Form.Select
+    value={namaPasien}
+    onChange={(e) => setNamaPasien(e.target.value)}
+    required
+  >
+    <option value="">Pilih Nama Pasien</option>
+    {daftarPasien.map((pasien) => (
+      <option key={pasien.id} value={pasien.nama}>
+        {pasien.nama} - {pasien.id}
+      </option>
+    ))}
+  </Form.Select>
+</Form.Group>
+
+
+              <Col><Form.Label>Umur</Form.Label><Form.Control required placeholder='Isikan umur pasien'/></Col>
             </Row>
 
             <Row className="mb-3">
@@ -268,7 +317,7 @@ const Pemeriksaan = () => {
             </Row>
 
             <Row className="mb-3">
-              <Col><Form.Label>Alamat Rumah</Form.Label><Form.Control required /></Col>
+              <Col><Form.Label>Alamat Rumah</Form.Label><Form.Control required placeholder='Isikan alamat rumah pasien'/></Col>
               <Col>
   <Form.Label>No. Telp/HP</Form.Label>
   <Form.Control
@@ -305,8 +354,8 @@ const Pemeriksaan = () => {
             <h5 className="mt-4">Identitas Suami</h5>
 
             <Row className="mb-3">
-              <Col><Form.Label>Nama</Form.Label><Form.Control required /></Col>
-              <Col><Form.Label>Umur</Form.Label><Form.Control required /></Col>
+             <Col> <Form.Label>Nama</Form.Label> <Form.Control required placeholder="Isikan nama lengkap pasien" /> </Col>
+              <Col><Form.Label>Umur</Form.Label><Form.Control required placeholder="Isikan umur pasien"/></Col>
             </Row>
 
             <Row className="mb-3">
@@ -380,7 +429,7 @@ const Pemeriksaan = () => {
             </Row>
 
             <Row className="mb-3">
-              <Col><Form.Label>Alamat Rumah</Form.Label><Form.Control required /></Col>
+              <Col><Form.Label>Alamat Rumah</Form.Label><Form.Control required placeholder='Isikan alamat rumah pasien'/></Col>
               <Col>
   <Form.Label>No. Telp/HP</Form.Label>
   <Form.Control
@@ -472,22 +521,22 @@ const Pemeriksaan = () => {
 
     <Form>
       <Row className="mb-3">
-        <Col><Form.Label>Menarche</Form.Label><Form.Control /></Col>
-        <Col><Form.Label>Siklus</Form.Label><Form.Control /></Col>
+        <Col><Form.Label>Menarche</Form.Label><Form.Control placeholder='Isikan menarche'/></Col>
+        <Col><Form.Label>Siklus</Form.Label><Form.Control placeholder='Isikan siklus menstruasi'/></Col>
       </Row>
 
       <Row className="mb-3">
-        <Col><Form.Label>Lama Haid</Form.Label><Form.Control /></Col>
-        <Col><Form.Label>Dismenorhea</Form.Label><Form.Control /></Col>
+        <Col><Form.Label>Lama Haid</Form.Label><Form.Control placeholder='Isikan lama haid'/></Col>
+        <Col><Form.Label>Dismenorhea</Form.Label><Form.Control placeholder='Isikan dismenorhea'/></Col>
       </Row>
 
       <Row className="mb-3">
-        <Col><Form.Label>Jumlah Darah yang Keluar</Form.Label><Form.Control /></Col>
-        <Col><Form.Label>HPHT</Form.Label><Form.Control type="date" /></Col>
+        <Col><Form.Label>Jumlah Darah yang Keluar</Form.Label><Form.Control placeholder='Isikan jumlah darah yang keluar'/></Col>
+        <Col><Form.Label>HPHT</Form.Label><Form.Control type="date" placeholder='Isikan HPHT'/></Col>
       </Row>
 
       <Row className="mb-3">
-        <Col><Form.Label>TP</Form.Label><Form.Control type="date" /></Col>
+        <Col><Form.Label>TP</Form.Label><Form.Control type="date" placeholder='Isikan TP'/></Col>
       </Row>
 
       <div className="d-flex justify-content-between mt-4">
@@ -506,14 +555,27 @@ const Pemeriksaan = () => {
     <h4 className="mb-4">IV. RIWAYAT PERKAWINAN</h4>
 
     <Form>
-      <Row className="mb-3">
-        <Col><Form.Label>Pernikahan ke-</Form.Label><Form.Control /></Col>
-        <Col><Form.Label>Status Pernikahan</Form.Label><Form.Control /></Col>
-      </Row>
+    <Row className="mb-3">
+  <Col>
+    <Form.Label>Pernikahan ke-</Form.Label>
+    <Form.Control placeholder="Isikan pernikahan ke berapa" />
+  </Col>
+  
+  <Col>
+    <Form.Label>Status Pernikahan</Form.Label>
+    <Form.Select defaultValue="">
+      <option value="" disabled>Pilih status pernikahan</option>
+      <option value="Belum Kawin">Belum kawin (lajang)</option>
+      <option value="Kawin">Kawin (menikah)</option>
+      <option value="Cerai Hidup">Cerai hidup</option>
+      <option value="Cerai Mati">Cerai mati</option>
+    </Form.Select>
+  </Col>
+</Row>
 
       <Row className="mb-3">
-        <Col><Form.Label>Lama Pernikahan</Form.Label><Form.Control /></Col>
-        <Col><Form.Label>Jumlah Anak</Form.Label><Form.Control /></Col>
+        <Col><Form.Label>Lama Pernikahan</Form.Label><Form.Control placeholder='Isikan lama pernikahan'/></Col>
+        <Col><Form.Label>Jumlah Anak</Form.Label><Form.Control placeholder='Isikan jumlah anak'/></Col>
       </Row>
 
       <div className="d-flex justify-content-between mt-4">
@@ -755,19 +817,28 @@ const Pemeriksaan = () => {
 {step === 7 && (
   <>
     <h4 className="mb-4">VII. RIWAYAT KESEHATAN</h4>
-
-    <Form>
-
-      <Row className="mb-3">
-        <Col><Form.Check label="Minum jamu" /></Col>
-        <Col><Form.Check label="Diurut dukun" /></Col>
+ <Row className="mb-3">
+        <Col md={12}>
+          <Form.Label>Bernafas</Form.Label>
+          <Form.Control placeholder="Ada keluhan / Tidak" />
+        </Col>
       </Row>
 
-      <Form.Group className="mb-3">
-        <Form.Label>Pernah kontak dengan binatang</Form.Label>
-        <Form.Control placeholder="Contoh: Tidak / Ya, dengan kucing" />
-      </Form.Group>
-
+      {/* (2) Pola Makan dan Minum */}
+      <h5 className="mt-3">Pola Makan dan Minum</h5>
+      <Row className="mb-3">
+        <Col md={6}><Form.Label>Menu yang sering dikonsumsi</Form.Label><Form.Control placeholder='Tulis menu yang sering dikonsumsi'/></Col>
+        <Col md={6}><Form.Label>Komposisi</Form.Label><Form.Control placeholder='Tulis komposisinya'/></Col>
+      </Row>
+      <Row className="mb-3">
+        <Col md={6}><Form.Label>Porsi</Form.Label><Form.Control placeholder='Tulis porsinya'/></Col>
+        <Col md={6}><Form.Label>Frekuensi</Form.Label><Form.Control placeholder='Tulis frekuensi konsumsi'/></Col>
+      </Row>
+      <Row className="mb-3">
+        <Col md={6}><Form.Label>Pola Minum</Form.Label><Form.Control placeholder='Tulis pola minum'/></Col>
+        <Col md={6}><Form.Label>Pantangan / Alergi</Form.Label><Form.Control placeholder='Tulis pantangan/alergi tertentu'/></Col>
+      </Row>
+    <Form>
       <h5 className="mt-4">Penyakit/Gejala Penyakit yang Pernah Diderita Ibu</h5>
       <Row className="mb-2">
         <Col><Form.Check label="Penyakit jantung" /></Col>
@@ -870,122 +941,19 @@ const Pemeriksaan = () => {
 )}
 {step === 9 && (
   <>
-    <h4 className="mb-4">IX. KEADAAN BIO-PSIKO-SOSIAL-SPIRITUAL</h4>
+    <h4 className="mb-4">IX. DIAGNOSIS DAN MASALAH</h4>
     <Form>
-
-      {/* (1) Bernafas */}
       <Row className="mb-3">
-        <Col md={12}>
-          <Form.Label>Bernafas</Form.Label>
-          <Form.Control placeholder="Ada keluhan / Tidak" />
-        </Col>
-      </Row>
-
-      {/* (2) Pola Makan dan Minum */}
-      <h5 className="mt-3">Pola Makan dan Minum</h5>
-      <Row className="mb-3">
-        <Col md={6}><Form.Label>Menu yang sering dikonsumsi</Form.Label><Form.Control /></Col>
-        <Col md={6}><Form.Label>Komposisi</Form.Label><Form.Control /></Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={6}><Form.Label>Porsi</Form.Label><Form.Control /></Col>
-        <Col md={6}><Form.Label>Frekuensi</Form.Label><Form.Control /></Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={6}><Form.Label>Pola Minum</Form.Label><Form.Control /></Col>
-        <Col md={6}><Form.Label>Pantangan / Alergi</Form.Label><Form.Control /></Col>
-      </Row>
-      <Col md={12}>
-          <Form.Label>Keluhan</Form.Label>
-          <Form.Control as="textarea" rows={2} />
-        </Col>
-
-      {/* (3) Pola Eliminasi */}
-      <h5 className="mt-3">Pola Eliminasi</h5>
-      <h6>BAK</h6>
-      <Row className="mb-3">
-        <Col md={4}><Form.Label>Frekuensi</Form.Label><Form.Control /></Col>
-        <Col md={4}><Form.Label>Keadaan</Form.Label><Form.Control /></Col>
-        <Col md={4}><Form.Label>Keluhan</Form.Label><Form.Control /></Col>
-      </Row>
-      <h6>BAB</h6>
-      <Row className="mb-3">
-        <Col md={4}><Form.Label>Frekuensi</Form.Label><Form.Control /></Col>
-        <Col md={4}><Form.Label>Keadaan</Form.Label><Form.Control /></Col>
-        <Col md={4}><Form.Label>Keluhan</Form.Label><Form.Control /></Col>
-      </Row>
-
-      {/* (4) Istirahat dan Tidur */}
-      <h5 className="mt-3">Istirahat dan Tidur</h5>
-      <Row className="mb-3">
-        <Col md={4}><Form.Label>Tidur malam</Form.Label><Form.Control /></Col>
-        <Col md={4}><Form.Label>Tidur siang</Form.Label><Form.Control /></Col>
-        <Col md={4}><Form.Label>Gangguan tidur</Form.Label><Form.Control /></Col>
-      </Row>
-
-      {/* (5) Pekerjaan */}
-      <h5 className="mt-3">Pekerjaan</h5>
-      <Row className="mb-3">
-        <Col md={4}><Form.Label>Lama kerja sehari</Form.Label><Form.Control /></Col>
-        <Col md={4}><Form.Label>Jenis aktivitas</Form.Label><Form.Control /></Col>
-        <Col md={4}><Form.Label>Kegiatan lain</Form.Label><Form.Control /></Col>
-      </Row>
-
-      {/* (6) Personal Hygiene */}
-      <h5 className="mt-3">Personal Hygiene</h5>
-      <Row className="mb-3">
-        <Col md={3}><Form.Label>Keramas</Form.Label><Form.Control /></Col>
-        <Col md={3}><Form.Label>Gosok gigi</Form.Label><Form.Control /></Col>
-        <Col md={3}><Form.Label>Mandi</Form.Label><Form.Control /></Col>
-        <Col md={3}><Form.Label>Ganti pakaian / pakaian dalam</Form.Label><Form.Control /></Col>
-      </Row>
-
-      {/* (7) Perilaku Seksual */}
-      <h5 className="mt-3">Perilaku Seksual</h5>
-      <Row className="mb-3">
-        <Col md={4}><Form.Label>Frekuensi</Form.Label><Form.Control /></Col>
-        <Col md={4}><Form.Label>Posisi</Form.Label><Form.Control /></Col>
-        <Col md={4}><Form.Label>Keluhan</Form.Label><Form.Control /></Col>
-      </Row>
-
-      {/* (8) Sikap terhadap Kehamilan */}
-      <h5 className="mt-3">Sikap / Respon terhadap kehamilan sekarang</h5>
-      <Row className="mb-3">
-        <Col md={12}>
-          <Form.Select>
-            <option>Direncanakan dan diterima</option>
-            <option>Direncanakan tapi tidak diterima</option>
-            <option>Tidak direncanakan tapi diterima</option>
-            <option>Tidak direncanakan dan tidak diterima</option>
-          </Form.Select>
-        </Col>
-      </Row>
-
-      {/* (9) - (14) Isian Bebas */}
-      <Row className="mb-3">
-        <Col md={12}>
-          <Form.Label>Kekhawatiran terhadap kehamilan sekarang</Form.Label>
-          <Form.Control as="textarea" rows={2} />
-        </Col>
-        <Col md={12}>
-          <Form.Label>Respon keluarga terhadap kehamilan</Form.Label>
-          <Form.Control as="textarea" rows={2} />
-        </Col>
-        <Col md={12}>
-          <Form.Label>Dukungan suami dan keluarga</Form.Label>
-          <Form.Control as="textarea" rows={2} />
-        </Col>
-        <Col md={12}>
-          <Form.Label>Rencana persalinan (tempat dan penolong)</Form.Label>
-          <Form.Control as="textarea" rows={2} />
-        </Col>
-        <Col md={12}>
-          <Form.Label>Persiapan persalinan lainnya</Form.Label>
-          <Form.Control as="textarea" rows={2} />
-        </Col>
-        <Col md={12}>
-          <Form.Label>Perilaku spiritual selama kehamilan</Form.Label>
-          <Form.Control as="textarea" rows={2} />
+        <Col>
+          <Form.Label>Diagnosis dan Masalah</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={4}
+            placeholder="Tuliskan diagnosis dan masalah"
+            value={diagnosis}
+            onChange={(e) => setDiagnosis(e.target.value)}
+            required
+          />
         </Col>
       </Row>
       <div className="d-flex justify-content-between mt-4">
@@ -993,28 +961,7 @@ const Pemeriksaan = () => {
       Kembali
     </Button>
     <Button variant="primary" onClick={nextStep}>
-      Lanjutkan
-    </Button>
-    </div>
-    </Form>
-  </>
-)}
-{step === 10 && (
-  <>
-    <h4 className="mb-4">X. PENGETAHUAN</h4>
-    <Form>
-      <Row className="mb-3">
-        <Col md={12}>
-          <Form.Label>Pengetahuan (sesuaikan dengan umur kehamilan)</Form.Label>
-          <Form.Control as="textarea" rows={6} placeholder="Tulis pengetahuan ibu sesuai usia kehamilan..." />
-        </Col>
-      </Row>
-      <div className="d-flex justify-content-between mt-4">
-      <Button variant="secondary" onClick={prevStep}>
-      Kembali
-    </Button>
-    <Button variant="primary" onClick={nextStep}>
-      Lanjutkan
+      Simpan Data
     </Button>
     </div>
     </Form>
@@ -1031,7 +978,7 @@ const Pemeriksaan = () => {
           <Modal.Title>Pendaftaran Pasien</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <PendaftaranolehBidan />  {/* Panggil komponen pendaftaran */}
+          <PendaftaranolehBidan />
         </Modal.Body>
       </Modal>
     </div>

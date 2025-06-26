@@ -21,14 +21,25 @@ const PendaftaranolehBidan = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const existingData = JSON.parse(localStorage.getItem('antrianPasien')) || [];
-    const newId = `A${String(existingData.length + 1).padStart(3, '0')}`;
-    const newPatient = { ...form, id: newId };
-    existingData.push(newPatient);
-    localStorage.setItem('antrianPasien', JSON.stringify(existingData));
-    navigate('/bidan/antrianpasien');
-  };
+  e.preventDefault();
+
+  const semuaKosong = Object.values(form).every(value => value.trim() === '');
+
+  if (semuaKosong) {
+    alert('Data masih kosong, silakan isi terlebih dahulu.');
+    return;
+  }
+
+  const existingData = JSON.parse(localStorage.getItem('antrianPasien')) || [];
+  const newId = `A${String(existingData.length + 1).padStart(3, '0')}`;
+  const newPatient = { ...form, id: newId };
+  existingData.push(newPatient);
+  localStorage.setItem('antrianPasien', JSON.stringify(existingData));
+
+  alert('Pasien berhasil didaftarkan!');
+  navigate('/bidan/antrianpasien');
+};
+
 
   return (
     <div style={{
@@ -44,8 +55,6 @@ const PendaftaranolehBidan = () => {
         maxWidth: '1000px', // <- Ini bikin form jadi melebar
         backgroundColor: '#fff',
       }}>
-     
-
         <Form onSubmit={handleSubmit}>
           <div className="row mb-3">
             <div className="col-md-6">
@@ -57,7 +66,7 @@ const PendaftaranolehBidan = () => {
                   value={form.nama}
                   onChange={handleChange}
                   placeholder="Tulis Nama Lengkap di Sini"
-                  required
+                  
                 />
               </Form.Group>
             </div>
@@ -77,16 +86,15 @@ const PendaftaranolehBidan = () => {
                     onChange={handleChange}
                     pattern="[0-9]+"
                     placeholder="Tulis Nomor WA di Sini"
-                    required
+                    
                   />
                 </div>
               </Form.Group>
             </div>
           </div>
-
           <Form.Group className="mb-3">
             <Form.Label>Layanan</Form.Label>
-            <Form.Select name="layanan" value={form.layanan} onChange={handleChange} required>
+            <Form.Select name="layanan" value={form.layanan} onChange={handleChange} >
               <option value="">Pilih Layanan</option>
               <option value="Pemeriksaan">Pemeriksaan</option>
               <option value="Persalinan">Persalinan</option>
@@ -104,7 +112,7 @@ const PendaftaranolehBidan = () => {
               value={form.keluhan}
               onChange={handleChange}
               placeholder="Tulis Keluhan Anda di Sini"
-              required
+              
             />
           </Form.Group>
 
@@ -112,25 +120,27 @@ const PendaftaranolehBidan = () => {
             <div className="col-md-6">
               <Form.Group>
                 <Form.Label>Tanggal</Form.Label>
-                <Form.Control type="date" name="tanggal" value={form.tanggal} onChange={handleChange} required />
+                <Form.Control type="date" name="tanggal" value={form.tanggal} onChange={handleChange}  />
               </Form.Group>
             </div>
             <div className="col-md-6">
               <Form.Group>
                 <Form.Label>Jam</Form.Label>
-                <Form.Control type="time" name="jam" value={form.jam} onChange={handleChange} required />
+                <Form.Control type="time" name="jam" value={form.jam} onChange={handleChange}  />
               </Form.Group>
             </div>
           </div>
 
           <div className="d-flex flex-column flex-md-row gap-3 mt-4">
             <Button
-              type="submit"
-              className="flex-grow-1"
-              style={{ backgroundColor: primaryColor, borderColor: primaryColor }}
-            >
-              Daftarkan Pasien
-            </Button>
+  type="button" // dari "submit" jadi "button"
+  className="flex-grow-1"
+  style={{ backgroundColor: primaryColor, borderColor: primaryColor }}
+  onClick={handleSubmit} // panggil fungsi manual
+>
+  Daftarkan Pasien
+</Button>
+
 
             <Button
               variant="outline-secondary"
