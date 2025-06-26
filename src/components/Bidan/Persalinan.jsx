@@ -303,13 +303,12 @@ useEffect(() => {
         </Form>
       </div>
     </div>
-    {/* Modal Pendaftaran */}
       <Modal show={showModal} onHide={() => setShowModal(false)} size='xl'>
         <Modal.Header closeButton>
           <Modal.Title>Pendaftaran Pasien</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <PendaftaranolehBidan />  {/* Panggil komponen pendaftaran */}
+          <PendaftaranolehBidan /> 
         </Modal.Body>
       </Modal>
     </div>
