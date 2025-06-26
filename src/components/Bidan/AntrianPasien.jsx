@@ -97,9 +97,17 @@ const AntrianPasien = () => {
         <Nav.Link onClick={() => setShowModal(true)} className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
         <FaUserPlus className="me-2" /> {sidebarOpen ? "Pendaftaran Pasien" : ""}
       </Nav.Link>
-        <Nav.Link as={Link} to="/bidan/antrianpasien" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-          <FaClock className="me-2" /> {sidebarOpen ? 'Antrian Pasien' : ''} 
-        </Nav.Link>
+          <Nav.Link
+                  as={Link}
+                  to="/bidan/antrianpasien"
+                  className="fw-semibold mb-3 pb-3 border-bottom rounded px-2"
+                  style={{
+                    backgroundColor: primaryColor, 
+                    color: 'white'                 
+                  }}
+                >
+                  <FaStethoscope className="me-2" /> {sidebarOpen ? 'Antrian Pasien' : ''}
+                      </Nav.Link>
         <Nav.Link as={Link} to="/bidan/pemeriksaan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
           <FaStethoscope className="me-2" /> {sidebarOpen ? 'Pemeriksaan' : ''} 
         </Nav.Link>

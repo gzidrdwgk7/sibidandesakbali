@@ -131,9 +131,17 @@ const Pemeriksaan = () => {
         <Nav.Link as={Link} to="/bidan/antrianpasien" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
           <FaClock className="me-2" /> {sidebarOpen ? 'Antrian Pasien' : ''}
         </Nav.Link>
-        <Nav.Link as={Link} to="/bidan/pemeriksaan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-          <FaStethoscope className="me-2" /> {sidebarOpen ? 'Pemeriksaan' : ''}
-        </Nav.Link>
+       <Nav.Link
+  as={Link}
+  to="/bidan/pemeriksaan"
+  className="fw-semibold mb-3 pb-3 border-bottom rounded px-2"
+  style={{
+    backgroundColor: primaryColor, // warna kotak
+    color: 'white'                 // warna teks
+  }}
+>
+  <FaStethoscope className="me-2" /> {sidebarOpen ? 'Pemeriksaan' : ''}
+</Nav.Link>
         <Nav.Link as={Link} to="/bidan/persalinan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
           <FaBaby className="me-2" /> {sidebarOpen ? 'Persalinan' : ''}
         </Nav.Link>

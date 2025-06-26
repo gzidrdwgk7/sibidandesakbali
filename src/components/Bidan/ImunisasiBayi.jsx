@@ -88,9 +88,17 @@ const ImunisasiBayi = () => {
                 <Nav.Link as={Link} to="/bidan/laporan-rekam-medis" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
                   <FaClipboardList className="me-2" /> {sidebarOpen ? 'Rekam Medis' : ''}
                 </Nav.Link>
-                <Nav.Link as={Link} to="/bidan/imunisasi-bayi" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-                  <FaSyringe className="me-2" /> {sidebarOpen ? 'Imunisasi Bayi' : ''}
-                </Nav.Link>
+                  <Nav.Link
+          as={Link}
+          to="/bidan/imunisasi-bayi"
+          className="fw-semibold mb-3 pb-3 border-bottom rounded px-2"
+          style={{
+            backgroundColor: primaryColor, // warna kotak
+            color: 'white'                 // warna teks
+          }}
+        >
+          <FaStethoscope className="me-2" /> {sidebarOpen ? 'Imunisasi Bayi' : ''}
+              </Nav.Link>
               </Nav>
         
               {/* Konten Utama */}
@@ -229,40 +237,10 @@ const ImunisasiBayi = () => {
               </Form.Group>
             </>
           )}
-     {step === 3 && (
-            <>
-              <h5 className="mb-3">🟦 Data Obyektif</h5>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Keadaan Saat Ini (gerak, tangis, warna kulit)</Form.Label>
-                <Form.Control as="textarea" rows={2} name="keadaanSaatIni" value={formData.keadaanSaatIni || ''} onChange={handleChange} />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Pemeriksaan Umum (BB, PB, LK, LD, HR, Suhu, RR)</Form.Label>
-                <Form.Control as="textarea" rows={2} name="pemeriksaanUmum" value={formData.pemeriksaanUmum || ''} onChange={handleChange} />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Pemeriksaan Fisik (kepala, mata, mulut, telinga, dada, perut, genetalia, ekstremitas)</Form.Label>
-                <Form.Control as="textarea" rows={2} name="pemeriksaanFisik" value={formData.pemeriksaanFisik || ''} onChange={handleChange} />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Refleks (grasping, babinski, dll)</Form.Label>
-                <Form.Control as="textarea" rows={2} name="refleks" value={formData.refleks || ''} onChange={handleChange} />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Pemeriksaan Penunjang (jika ada)</Form.Label>
-                <Form.Control as="textarea" rows={2} name="pemeriksaanPenunjang" value={formData.pemeriksaanPenunjang || ''} onChange={handleChange} />
-              </Form.Group>
-            </>
-          )}
 
 {step === 4 && (
   <>
-    <h5 className="mb-3">🟥 Diagnosa dan Masalah</h5>
+    <h5 className="mb-3">IV. Diagnosa dan Masalah</h5>
 
     <Form.Group className="mb-3">
       <Form.Label>Diagnosa</Form.Label>

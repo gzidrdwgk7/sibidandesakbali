@@ -1,12 +1,12 @@
 import React, { useState, useRef } from "react";
-import { Nav, Form, InputGroup, Navbar, NavDropdown, Button } from "react-bootstrap";
+import { Nav, Form, InputGroup, Navbar, NavDropdown, Button, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {
   FaBars, FaSearch, FaTachometerAlt, FaUserPlus, FaClock,
   FaStethoscope, FaBaby, FaBookMedical, FaClipboardList,
   FaSyringe, FaBell, FaUserCircle, FaPrint
 } from "react-icons/fa";
-
+import PendaftaranolehBidan from './PendaftaranolehBidan';
 const primaryColor = "#e064ac";
 
 const RekamMedis = () => {
@@ -18,6 +18,7 @@ const RekamMedis = () => {
     console.log("Logging out...");
 
   };
+    const [showModal, setShowModal] = useState(false);  // Menambahkan state untuk kontrol modal
   const handlePrint = () => {
     const printContents = printRef.current.innerHTML;
     const originalContents = document.body.innerHTML;
@@ -129,9 +130,17 @@ const RekamMedis = () => {
          <Nav.Link as={Link} to="/bidan/pasca-persalinan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
            <FaBookMedical className="me-2" /> {sidebarOpen ? 'Pasca Persalinan' : ''}
          </Nav.Link>
-         <Nav.Link as={Link} to="/bidan/laporan-rekam-medis" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-           <FaClipboardList className="me-2" /> {sidebarOpen ? 'Rekam Medis' : ''}
-         </Nav.Link>
+         <Nav.Link
+                 as={Link}
+                 to="/bidan/laporan-rekam-medis"
+                 className="fw-semibold mb-3 pb-3 border-bottom rounded px-2"
+                 style={{
+                   backgroundColor: primaryColor, // warna kotak
+                   color: 'white'                 // warna teks
+                 }}
+               >
+                 <FaStethoscope className="me-2" /> {sidebarOpen ? 'Rekam Medis' : ''}
+                     </Nav.Link>
          <Nav.Link as={Link} to="/bidan/imunisasi-bayi" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
            <FaSyringe className="me-2" /> {sidebarOpen ? 'Imunisasi Bayi' : ''}
          </Nav.Link>
@@ -159,8 +168,12 @@ const RekamMedis = () => {
              </NavDropdown>
            </div>
          </Navbar>
- 
+   <div className="d-flex justify-content-end mb-3 d-print-none">
+          <Button variant="danger" onClick={handlePrint}><FaPrint className="me-2" /> Cetak Rekam Medis</Button>
+        </div>
         {/* Step Form */}
+ <div className="shadow-lg p-4 border-0 rounded-4 bg-white">
+    
 
         <div ref={printRef}>
   <div className="row">
@@ -240,7 +253,16 @@ const RekamMedis = () => {
         </div>
       </div>
     </div>
+         {/* Modal Pendaftaran */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} size='xl'>
+        <Modal.Header closeButton>
+          <Modal.Title>Pendaftaran Pasien</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <PendaftaranolehBidan />  {/* Panggil komponen pendaftaran */}
+        </Modal.Body>
+      </Modal>
+    </div>
   );
 };
-
 export default RekamMedis;

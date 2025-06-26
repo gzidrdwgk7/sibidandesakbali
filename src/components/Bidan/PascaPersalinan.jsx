@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Nav, InputGroup, Row, Col, Navbar, NavDropdown } from 'react-bootstrap';
+import { Form, Button, Nav, InputGroup, Row, Col, Navbar, NavDropdown, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import {
   FaBars, FaUserPlus, FaClipboardList, FaStethoscope, FaBaby,
@@ -42,7 +42,6 @@ const handleSubmit = (e) => {
     alert('Data berhasil disimpan!\n\n' + JSON.stringify(formData, null, 2));
   }
 };
-
 
   const formatDateTime = () => {
     const now = new Date();
@@ -119,9 +118,17 @@ const handleSubmit = (e) => {
           <Nav.Link as={Link} to="/bidan/persalinan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
             <FaBaby className="me-2" /> {sidebarOpen ? 'Persalinan' : ''}
           </Nav.Link>
-          <Nav.Link as={Link} to="/bidan/pasca-persalinan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-            <FaBookMedical className="me-2" /> {sidebarOpen ? 'Pasca Persalinan' : ''}
-          </Nav.Link>
+        <Nav.Link
+          as={Link}
+          to="/bidan/pasca-persalinan"
+          className="fw-semibold mb-3 pb-3 border-bottom rounded px-2"
+          style={{
+            backgroundColor: primaryColor, // warna kotak
+            color: 'white'                 // warna teks
+          }}
+        >
+          <FaStethoscope className="me-2" /> {sidebarOpen ? 'Pasca Persalinan' : ''}
+              </Nav.Link>
           <Nav.Link as={Link} to="/bidan/laporan-rekam-medis" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
             <FaClipboardList className="me-2" /> {sidebarOpen ? 'Rekam Medis' : ''}
           </Nav.Link>
