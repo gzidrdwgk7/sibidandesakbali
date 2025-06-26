@@ -6,11 +6,13 @@ import {
   FaBookMedical, FaSyringe, FaClock, FaTachometerAlt, FaSearch,
   FaBell, FaUserCircle
 } from 'react-icons/fa';
+import PendaftaranolehBidan from './PendaftaranolehBidan';
 
 const PascaPersalinan = () => {
   const [step, setStep] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const primaryColor = '#e064ac';
+  const [showModal, setShowModal] = useState(false); 
 
   const [formData, setFormData] = useState({
     namaIbu: '', namaSuami: '', umurIbu: '', umurSuami: '',
@@ -106,9 +108,9 @@ const handleSubmit = (e) => {
           <Nav.Link as={Link} to="/dashboard-bidan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
             <FaTachometerAlt className="me-2" /> {sidebarOpen ? 'Dashboard Bidan' : ''}
           </Nav.Link>
-          <Nav.Link as={Link} to="/bidan/pendaftaran" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-            <FaUserPlus className="me-2" /> {sidebarOpen ? 'Pendaftaran Pasien' : ''}
-          </Nav.Link>
+           <Nav.Link onClick={() => setShowModal(true)} className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
+             <FaUserPlus className="me-2" /> {sidebarOpen ? "Pendaftaran Pasien" : ""}
+           </Nav.Link>
           <Nav.Link as={Link} to="/bidan/antrianpasien" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
             <FaClock className="me-2" /> {sidebarOpen ? 'Antrian Pasien' : ''}
           </Nav.Link>
@@ -269,6 +271,15 @@ const handleSubmit = (e) => {
         </Form>
       </div>
     </div>
+      {/* Modal Pendaftaran */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} size='xl'>
+        <Modal.Header closeButton>
+          <Modal.Title>Pendaftaran Pasien</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <PendaftaranolehBidan />  {/* Panggil komponen pendaftaran */}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

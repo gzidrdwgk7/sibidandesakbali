@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Nav, InputGroup, Row, Col, Navbar, NavDropdown } from 'react-bootstrap';
+import { Form, Button, Nav, InputGroup, Row, Col, Navbar, NavDropdown, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import {
   FaBars, FaUserPlus, FaClipboardList, FaStethoscope, FaBaby,
   FaBookMedical, FaSyringe, FaClock, FaTachometerAlt, FaSearch,
   FaBell, FaUserCircle
 } from 'react-icons/fa';
+import PendaftaranolehBidan from './PendaftaranolehBidan';  
 
 const ImunisasiBayi = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [step, setStep] = useState(1);
   const primaryColor = '#e064ac';
+  const [showModal, setShowModal] = useState(false); 
   const [formData, setFormData] = useState({});
 
   const [currentDateTime, setCurrentDateTime] = useState({ day: '', date: '', time: '' });
@@ -70,8 +72,8 @@ const ImunisasiBayi = () => {
          <Nav.Link as={Link} to="/dashboard-bidan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
                   <FaTachometerAlt className="me-2" /> {sidebarOpen ? 'Dashboard Bidan' : ''}
                 </Nav.Link>
-                <Nav.Link as={Link} to="/bidan/pendaftaran" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-                  <FaUserPlus className="me-2" /> {sidebarOpen ? 'Pendaftaran Pasien' : ''}
+                <Nav.Link onClick={() => setShowModal(true)} className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
+                  <FaUserPlus className="me-2" /> {sidebarOpen ? "Pendaftaran Pasien" : ""}
                 </Nav.Link>
                 <Nav.Link as={Link} to="/bidan/antrianpasien" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
                   <FaClock className="me-2" /> {sidebarOpen ? 'Antrian Pasien' : ''}
@@ -265,6 +267,15 @@ const ImunisasiBayi = () => {
         </Form>
       </div>
       </div>
+      {/* Modal Pendaftaran */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} size='xl'>
+        <Modal.Header closeButton>
+          <Modal.Title>Pendaftaran Pasien</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <PendaftaranolehBidan />  {/* Panggil komponen pendaftaran */}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

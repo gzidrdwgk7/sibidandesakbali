@@ -3,7 +3,7 @@ import { Nav, Form, InputGroup, Navbar, NavDropdown, Button, Modal } from "react
 import { Link } from "react-router-dom";
 import {
   FaBars, FaSearch, FaTachometerAlt, FaUserPlus, FaClock,
-  FaStethoscope, FaBaby, FaBookMedical, FaClipboardList,
+  FaStethoscope, FaBaby, FaBookMedical,
   FaSyringe, FaBell, FaUserCircle, FaPrint
 } from "react-icons/fa";
 import PendaftaranolehBidan from './PendaftaranolehBidan';
