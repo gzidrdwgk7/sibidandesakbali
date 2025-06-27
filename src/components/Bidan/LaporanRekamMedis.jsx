@@ -38,7 +38,9 @@ const RekamMedis = () => {
 
 
   const logOut = () => {
-    console.log("Logging out...");
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userType');
+    navigate('/');
   };
 
   return (

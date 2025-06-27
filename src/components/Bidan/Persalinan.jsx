@@ -66,8 +66,9 @@ useEffect(() => {
   setStep(prev => prev + 1);
 };
 const prevStep = () => setStep((prev) => prev - 1);
-const navigate = useNavigate();
- const handleSubmit = () => {
+ const handleSubmit = (event) => {
+  event.preventDefault(); 
+
   const currentStepForm = document.querySelectorAll(
     `[data-step="${step}"] input, [data-step="${step}"] textarea, [data-step="${step}"] select`
   );
@@ -80,15 +81,15 @@ const navigate = useNavigate();
   }
 
   alert('Data berhasil disimpan!');
-  setTimeout(() => {
-    navigate('/bidan/laporan-rekam-medis');
-  }, 100);
+  navigate('/bidan/laporan-rekam-medis'); 
 };
+
 const [currentDateTime, setCurrentDateTime] = useState({
   day: '',
   date: '',
   time: ''
 });
+const navigate = useNavigate();
 
 const formatDateTime = () => {
   const now = new Date();
