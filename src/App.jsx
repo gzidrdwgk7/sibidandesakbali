@@ -12,6 +12,10 @@ import Persalinan from './components/Bidan/Persalinan';
 import PascaPersalinan from './components/Bidan/PascaPersalinan';
 import ImunisasiBayi from './components/Bidan/ImunisasiBayi';
 import RekamMedis from './components/Bidan/LaporanRekamMedis';
+import PenjadwalanPasien from './components/Pasien/PenjadwalanPasien';
+import JadwalPasien from './components/Pasien/JadwalPasien';
+import RiwayatRekamMedis from './components/Pasien/RiwayatRekamMedis.jsx';
+
 
 const App = () => {
   useEffect(() => {
@@ -79,9 +83,19 @@ const App = () => {
          <Route path="/bidan/imunisasi-bayi" 
          element={<ImunisasiBayi />} 
          />
+          <Route path="/pasien/penjadwalan-pasien" 
+         element={<PenjadwalanPasien />} 
+         />
+         <Route path="/pasien/jadwalpasien"
+         element={<JadwalPasien />}
+         />
+          <Route path="/pasien/riwayat-rekam-medis"
+         element={<RiwayatRekamMedis />}
+         />
       </Routes>
       
     </div>
+    
   );
 };
 

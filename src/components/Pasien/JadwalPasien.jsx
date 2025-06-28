@@ -2,20 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Nav, Navbar, NavDropdown, Form, FormControl, InputGroup, Table, Button} from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
-import PendaftaranolehBidan from './PendaftaranolehBidan';
+import PendaftaranolehBidan from '../Bidan/PendaftaranolehBidan';
 import { FaBars,FaUserPlus,FaUsers,FaClipboardList,FaStethoscope,FaBaby,FaBookMedical,FaSyringe,FaBell,FaClock,FaAngleRight,FaTachometerAlt,FaSearch,FaUserCircle} from 'react-icons/fa';
 
-const AntrianPasien = () => {
+const JadwalPasien = () => {
   const navigate = useNavigate();
-  const [antrianPasien, setAntrianPasien] = useState([]);
+  const [jadwalPasien, setJadwalPasien] = useState([]);
   const [isEditing, setIsEditing] = useState(null);
   const [status, setStatus] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('antrianPasien')) || [];
-    setAntrianPasien(data);
+    const data = JSON.parse(localStorage.getItem('jadwalPasien')) || [];
+setJadwalPasien(data);
+
 
     const initialStatus = {};
     data.forEach((pasien) => {
@@ -91,39 +92,36 @@ const AntrianPasien = () => {
           </InputGroup>
         </Form>
 
-        <Nav.Link as={Link} to="/dashboard-bidan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-          <FaTachometerAlt className="me-2" /> {sidebarOpen ? 'Dashboard Bidan' : ''} 
-        </Nav.Link>
-        <Nav.Link onClick={() => setShowModal(true)} className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-        <FaUserPlus className="me-2" /> {sidebarOpen ? "Pendaftaran Pasien" : ""}
+        {/* Menu Sidebar with Icons */}
+        <Nav.Link as={Link} to="/dashboard-pasien" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
+                 <FaTachometerAlt className="me-2" /> {sidebarOpen ? 'Dashboard Pasien' : ''}
+               </Nav.Link>
+              <Nav.Link
+          onClick={() => setShowModal(true)} 
+          className="fw-semibold mb-3 pb-3 border-bottom"
+          style={{ color: primaryColor }}
+      >
+          <FaUserPlus className="me-2" /> {sidebarOpen ? 'Penjadwalan Pasien' : ''}
       </Nav.Link>
-          <Nav.Link
-                  as={Link}
-                  to="/bidan/antrianpasien"
-                  className="fw-semibold mb-3 pb-3 border-bottom rounded px-2"
-                  style={{
-                    backgroundColor: primaryColor, 
-                    color: 'white'                 
-                  }}
-                >
-                  <FaStethoscope className="me-2" /> {sidebarOpen ? 'Antrian Pasien' : ''}
-                      </Nav.Link>
-        <Nav.Link as={Link} to="/bidan/pemeriksaan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-          <FaStethoscope className="me-2" /> {sidebarOpen ? 'Pemeriksaan' : ''} 
-        </Nav.Link>
-        <Nav.Link as={Link} to="/bidan/persalinan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-          <FaBaby className="me-2" /> {sidebarOpen ? 'Persalinan' : ''} 
-        </Nav.Link>
-        <Nav.Link as={Link} to="/bidan/pasca-persalinan" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-          <FaBookMedical className="me-2" /> {sidebarOpen ? 'Pasca Persalinan' : ''} 
-        </Nav.Link>
-        <Nav.Link as={Link} to="/bidan/laporan-rekam-medis" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-          <FaClipboardList className="me-2" /> {sidebarOpen ? 'Rekam Medis' : ''} 
-        </Nav.Link>
-        <Nav.Link as={Link} to="/bidan/imunisasi-bayi" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-          <FaSyringe className="me-2" /> {sidebarOpen ? 'Imunisasi Bayi' : ''} 
-        </Nav.Link>
-      </Nav>
+              <Nav.Link
+                as={Link}
+                to="/pasien/jadwalpasien"
+                className="fw-semibold mb-3 pb-3 border-bottom"
+                style={{ color: primaryColor }}
+              >
+                <FaClock className="me-2" /> {sidebarOpen ? 'Antrian Pasien' : ''} 
+              </Nav.Link>
+            <Nav.Link
+                      as={Link}
+                      to="/pasien/riwayat-rekam-medis"
+                      className="fw-semibold mb-3 pb-3 border-bottom"
+                      style={{ color: primaryColor }}
+                    >
+                      <FaClipboardList className="me-2" /> {sidebarOpen ? 'Riwayat Rekam Medis' : ''} 
+                    </Nav.Link>
+              {/* Toggle Sidebar Button */}
+              <div className="mt-auto"></div>
+            </Nav>
 
       {/* Konten Utama */}
       <div className="flex-grow-1 p-4" style={{ backgroundColor: 'white', marginLeft: sidebarOpen ? '250px' : '80px', transition: 'margin-left 0.3s' }}>
@@ -159,11 +157,10 @@ const AntrianPasien = () => {
                     <th>Jam</th>
                     <th>Keluhan</th>
                     <th>Status</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {antrianPasien.map((pasien) => (
+                  {jadwalPasien.map((pasien) => (
                     <tr key={pasien.id}>
                       <td className='text-center'>{pasien.id}</td>
                       <td className='text-justify'>{pasien.nama}</td>
@@ -188,11 +185,7 @@ const AntrianPasien = () => {
                           status[pasien.id] || 'Menunggu'
                         )}
                       </td>
-                      <td className='text-center'>
-                        <Button onClick={() => toggleEdit(pasien.id)} variant="primary" size="sm">
-                          {isEditing === pasien.id ? 'Selesai' : 'Edit Data'}
-                        </Button>
-                      </td>
+                    
                     </tr>
                   ))}
                 </tbody>
@@ -214,4 +207,4 @@ const AntrianPasien = () => {
     </div>
   );
 };
-export default AntrianPasien;
+export default JadwalPasien;

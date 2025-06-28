@@ -159,7 +159,7 @@ useEffect(() => {
           <FaTachometerAlt className="me-2" /> {sidebarOpen ? 'Dashboard Bidan' : ''}
         </Nav.Link>
         <Nav.Link onClick={() => setShowModal(true)} className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
-          <FaUserPlus className="me-2" /> {sidebarOpen ? "Pendaftaran Pasien" : ""}
+          <FaUserPlus className="me-2" /> {sidebarOpen ? "Penjadwalan Pasien" : ""}
         </Nav.Link>
         <Nav.Link as={Link} to="/bidan/antrianpasien" className="fw-semibold mb-3 pb-3 border-bottom" style={{ color: primaryColor }}>
           <FaClock className="me-2" /> {sidebarOpen ? 'Antrian Pasien' : ''}
@@ -975,7 +975,7 @@ useEffect(() => {
       {/* Modal Pendaftaran */}
       <Modal show={showModal} onHide={() => setShowModal(false)} size='xl'>
         <Modal.Header closeButton>
-          <Modal.Title>Pendaftaran Pasien</Modal.Title>
+          <Modal.Title>Booking Jadwal Pasien</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <PendaftaranolehBidan />
