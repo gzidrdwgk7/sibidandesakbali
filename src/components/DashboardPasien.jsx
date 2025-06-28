@@ -199,7 +199,7 @@ const DashboardPasien = () => {
               <div style={{ width: '100%', height: '300px', borderRadius: '12px', overflow: 'hidden' }}>
                 <iframe
                   width="100%" height="100%"
-                  src="https://www.youtube.com/embed/GdfKy3TKOhc"
+                  src="https://www.youtube.com/embed/zqpinGFvivg?si=w32eSXQ9YcrzqdIWc"
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
