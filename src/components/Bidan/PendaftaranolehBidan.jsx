@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PendaftaranolehBidan = () => {
   const [form, setForm] = useState({
-    id: "",
-    nama: "",
-    whatsapp: "",
-    layanan: "",
-    keluhan: "",
-    tanggal: "",
-    jam: "",
+    id: '',
+    nama: '',
+    whatsapp: '',
+    layanan: '',
+    keluhan: '',
+    tanggal: '',
+    jam: '',
   });
 
   const navigate = useNavigate();
   const primaryColor = '#e064ac';
+  const [userType, setUserType] = useState('');
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('userType');
+    if (!storedUser) {
+      navigate('/login');
+    } else {
+      setUserType(storedUser);
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,20 +39,30 @@ const PendaftaranolehBidan = () => {
       return;
     }
 
-    // Simpan ke antrianPasien (untuk bidan)
+    // Buat ID otomatis
     const existingAntrian = JSON.parse(localStorage.getItem('antrianPasien')) || [];
     const newId = `A${String(existingAntrian.length + 1).padStart(3, '0')}`;
     const newPatient = { ...form, id: newId };
-    existingAntrian.push(newPatient);
-    localStorage.setItem('antrianPasien', JSON.stringify(existingAntrian));
 
-    // Simpan juga ke jadwalPasien (untuk pasien)
+    // Simpan ke antrianPasien (khusus Bidan)
+    const updatedAntrian = [...existingAntrian, newPatient];
+    localStorage.setItem('antrianPasien', JSON.stringify(updatedAntrian));
+
+    // Simpan ke jadwalPasien (khusus Pasien)
     const existingJadwal = JSON.parse(localStorage.getItem('jadwalPasien')) || [];
-    existingJadwal.push(newPatient);
-    localStorage.setItem('jadwalPasien', JSON.stringify(existingJadwal));
+    const updatedJadwal = [...existingJadwal, newPatient];
+    localStorage.setItem('jadwalPasien', JSON.stringify(updatedJadwal));
 
     alert('Pasien berhasil didaftarkan!');
-    navigate('/bidan/antrianpasien');
+
+    // Arahkan sesuai peran
+    if (userType === 'bidan') {
+      navigate('/bidan/antrianpasien');
+    } else if (userType === 'pasien') {
+      navigate('/pasien/jadwalpasien');
+    } else {
+      navigate('/login'); // fallback
+    }
   };
 
   return (
@@ -77,10 +97,8 @@ const PendaftaranolehBidan = () => {
               <Form.Group>
                 <Form.Label>Nomor WhatsApp</Form.Label>
                 <div className="d-flex">
-                  <Form.Select className="me-2" style={{ width: '30%' }}>
+                  <Form.Select className="me-2" style={{ width: '30%' }} disabled>
                     <option value="+62">+62</option>
-                    <option value="+1">+1</option>
-                    <option value="+91">+91</option>
                   </Form.Select>
                   <Form.Control
                     type="text"
@@ -151,15 +169,13 @@ const PendaftaranolehBidan = () => {
             >
               Daftarkan Pasien
             </Button>
-
             <Button
               variant="outline-secondary"
               className="flex-grow-1"
-              as={Link}
-              to="/bidan/antrianpasien"
+              onClick={() => navigate(-1)}
               style={{ borderColor: primaryColor, color: primaryColor }}
             >
-              Lihat Jadwal Terkini
+              Kembali
             </Button>
           </div>
         </Form>
