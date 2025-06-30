@@ -31,7 +31,7 @@ const [showModal, setShowModal] = useState(false);
 
   const handlePrint = () => {
     if (!selectedPasien) {
-      alert("Pilih pasien terlebih dahulu.");
+      alert("Pilih tanggal pemeriksaan terlebih dahulu.");
       return;
     }
     const content = printRef.current.innerHTML;
@@ -108,7 +108,7 @@ const [showModal, setShowModal] = useState(false);
         <Nav.Link
           as={Link}
           to="/pasien/riwayat-rekam-medis"
-          className="fw-semibold mb-3 pb-3 border-bottom"
+          className="fw-semibold mb-3 pb-3 border-bottom fw-semibold mb-3 pb-3 border-bottom rounded px-2"
           style={{ backgroundColor: primaryColor, color: 'white' }}
         >
           <FaClipboardList className="me-2" /> {sidebarOpen ? 'Riwayat Rekam Medis' : ''}

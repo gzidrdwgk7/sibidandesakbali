@@ -106,7 +106,7 @@ setJadwalPasien(data);
               <Nav.Link
                 as={Link}
                 to="/pasien/jadwalpasien"
-                className="fw-semibold mb-3 pb-3 border-bottom"
+                className="fw-semibold mb-3 pb-3 border-bottom rounded px-2"
                 style={{ backgroundColor: primaryColor, color: 'white' }}
               >
                 <FaClock className="me-2" /> {sidebarOpen ? 'Antrian Pasien' : ''} 
