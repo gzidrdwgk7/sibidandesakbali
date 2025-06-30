@@ -17,14 +17,12 @@ const PendaftaranolehBidan = () => {
   const primaryColor = '#e064ac';
   const [userType, setUserType] = useState('');
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('userType');
-    if (!storedUser) {
-      navigate('/login');
-    } else {
-      setUserType(storedUser);
-    }
-  }, [navigate]);
+useEffect(() => {
+  const storedUser = localStorage.getItem('userType');
+  if (storedUser) {
+    setUserType(storedUser); // hanya set, tidak paksa navigate
+  }
+}, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
