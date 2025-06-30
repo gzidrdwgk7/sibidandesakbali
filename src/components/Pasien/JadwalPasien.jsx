@@ -101,13 +101,13 @@ setJadwalPasien(data);
           className="fw-semibold mb-3 pb-3 border-bottom"
           style={{ color: primaryColor }}
       >
-          <FaUserPlus className="me-2" /> {sidebarOpen ? 'Penjadwalan Pasien' : ''}
+          <FaUserPlus className="me-2" /> {sidebarOpen ? 'Penjadwalan Pasien' : '' }
       </Nav.Link>
               <Nav.Link
                 as={Link}
                 to="/pasien/jadwalpasien"
                 className="fw-semibold mb-3 pb-3 border-bottom"
-                style={{ color: primaryColor }}
+                style={{ backgroundColor: primaryColor, color: 'white' }}
               >
                 <FaClock className="me-2" /> {sidebarOpen ? 'Antrian Pasien' : ''} 
               </Nav.Link>

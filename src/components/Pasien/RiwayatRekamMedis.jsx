@@ -109,7 +109,7 @@ const [showModal, setShowModal] = useState(false);
           as={Link}
           to="/pasien/riwayat-rekam-medis"
           className="fw-semibold mb-3 pb-3 border-bottom"
-          style={{ color: primaryColor }}
+          style={{ backgroundColor: primaryColor, color: 'white' }}
         >
           <FaClipboardList className="me-2" /> {sidebarOpen ? 'Riwayat Rekam Medis' : ''}
         </Nav.Link>
