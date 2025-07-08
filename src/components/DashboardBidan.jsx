@@ -65,7 +65,7 @@ const DashboardBidan = () => {
     { name: 'Batal Periksa', value: 5 }
   ];
   
-  const primaryColor = '#e064ac';  // Pink (sesuai warna buku pink)
+const primaryColor = "black"; // Pink (sesuai warna buku pink)
   const secondaryColor = '#f1d0d6';  // Pink lembut
   const chartColor = '#FF2D8B'; // Pink pekat
   
@@ -347,7 +347,7 @@ const DashboardBidan = () => {
       </div>
       <Modal show={showModal} onHide={() => setShowModal(false)} size="xl">
   <Modal.Header closeButton>
-    <Modal.Title>Pendaftaran Pasien</Modal.Title>
+    <Modal.Title>Booking Jadwal Pasien</Modal.Title>
   </Modal.Header>
   <Modal.Body>
     <PendaftaranolehBidan onClose={() => setShowModal(false)} />

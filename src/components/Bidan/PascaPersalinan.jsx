@@ -11,7 +11,7 @@ import PendaftaranolehBidan from './PendaftaranolehBidan';
 const PascaPersalinan = () => {
   const [step, setStep] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const primaryColor = '#e064ac';
+  const primaryColor = "black";
   const [showModal, setShowModal] = useState(false); 
 const [daftarPasien, setDaftarPasien] = useState([]);
 const [namaPasien, setNamaPasien] = useState("");
@@ -109,9 +109,9 @@ const handleSubmit = () => {
             transition: 'width 0.3s',
           }}>
           <div className="d-flex justify-content-between align-items-center mb-3">
-            <h4 className="fw-bold mb-0" style={{ color: primaryColor }}>
+            <h3 className="fw-bold mb-0" style={{ color: primaryColor }}>
               {sidebarOpen ? "Persalinan" : ""}
-            </h4>
+            </h3>
             <button className="btn btn-link"
               onClick={() => setSidebarOpen(!sidebarOpen)}
               style={{ color: primaryColor, fontSize: "20px" }}>

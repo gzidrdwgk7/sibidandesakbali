@@ -14,7 +14,7 @@ import PendaftaranolehBidan from './PendaftaranolehBidan';
 const Persalinan = () => {
   const [step, setStep] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const primaryColor = '#e064ac';
+  const primaryColor = "black";
   const logOut = () => {
   localStorage.removeItem('isLoggedIn');
   localStorage.removeItem('userType');
@@ -125,9 +125,9 @@ useEffect(() => {
           transition: 'width 0.3s',
         }}>
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <h4 className="fw-bold mb-0" style={{ color: primaryColor }}>
+          <h3 className="fw-bold mb-0" style={{ color: primaryColor }}>
             {sidebarOpen ? "Persalinan" : ""}
-          </h4>
+          </h3>
           <button className="btn btn-link"
             onClick={() => setSidebarOpen(!sidebarOpen)}
             style={{ color: primaryColor, fontSize: "20px" }}>
@@ -230,7 +230,7 @@ useEffect(() => {
           {step === 1 && (
             <>
              <div data-step="1">
-              <h4 className="mb-4">I. DATA IDENTITAS IBU</h4>
+              <h3 className="mb-4">I. DATA IDENTITAS IBU</h3>
               <Form.Group className="mb-3">
   <Form.Label>Nama Pasien</Form.Label>
   <Form.Select
@@ -273,7 +273,7 @@ useEffect(() => {
           {step === 2 && (
             <>
             <div data-step="2">
-              <h4 className="mb-3">II. PEMERIKSAAN</h4>
+              <h3 className="mb-3">II. PEMERIKSAAN</h3>
               <Form.Group className="mb-3">
                 <Form.Label>Keluhan Utama</Form.Label>
                 <Form.Control as="textarea" name="keluhan" value={formData.keluhan} onChange={handleChange} required placeholder='Tulis keluhan utama pasien' />
@@ -313,7 +313,7 @@ useEffect(() => {
 {step === 3 && (
   <>
   <div data-step="3">
-    <h4 className="mb-3">III. PENATALAKSANAAN</h4>
+    <h3 className="mb-3">III. PENATALAKSANAAN</h3>
 
     <Form.Group className="mb-3">
       <Form.Label>Kondisi Ibu</Form.Label>

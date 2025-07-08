@@ -70,7 +70,7 @@ const DashboardPasien = () => {
     { tahun: '2023', persentase: 20.0 }
   ];
 
-  const primaryColor = '#e064ac';
+  const primaryColor = "black";
   const chartColor = '#FF2D8B';
 
   return (

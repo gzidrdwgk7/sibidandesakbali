@@ -11,7 +11,7 @@ import PendaftaranolehBidan from './PendaftaranolehBidan';
 const ImunisasiBayi = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [step, setStep] = useState(1);
-  const primaryColor = '#e064ac';
+  const primaryColor = "black";
   const [showModal, setShowModal] = useState(false); 
   const [formData, setFormData] = useState({});
 const [daftarPasien, setDaftarPasien] = useState([]);
@@ -83,7 +83,7 @@ const navigate = useNavigate();
     <div className="d-flex">
       <Nav className="flex-column p-3" style={{ position: 'fixed', top: 0, bottom: 0, width: sidebarOpen ? '255px' : '80px', backgroundColor: '#fff', boxShadow: '4px 0px 8px rgba(0, 0, 0, 0.2)', overflowY: 'auto', transition: 'width 0.3s' }}>
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <h4 className="fw-bold mb-0" style={{ color: primaryColor }}>{sidebarOpen ? 'Imunisasi Bayi' : ''}</h4>
+          <h3 className="fw-bold mb-0" style={{ color: primaryColor }}>{sidebarOpen ? 'Imunisasi Bayi' : ''}</h3>
           <button className="btn btn-link"
                      onClick={() => setSidebarOpen(!sidebarOpen)}
                      style={{ color: primaryColor, fontSize: "20px" }}>

@@ -41,7 +41,7 @@ const AntrianPasien = () => {
     navigate('/');
   };
 
-  const primaryColor = '#e064ac';
+  const primaryColor = "black";
 
   return (
     <div className="d-flex">
@@ -61,9 +61,9 @@ const AntrianPasien = () => {
       >
         <div className="d-flex justify-content-between align-items-center mb-3">
           <div className="d-flex align-items-center">
-            <h4 className="fw-bold mb-0" style={{ color: primaryColor }}>
+            <h3 className="fw-bold mb-0" style={{ color: primaryColor }}>
               {sidebarOpen ? "Antrian Pasien" : ""}
-            </h4>
+            </h3>
           </div>
           <button
             className="btn btn-link"
@@ -148,7 +148,7 @@ const AntrianPasien = () => {
         <Row className="justify-content-center">
           <Col md={12}>
             <Card className="shadow-lg p-4 border-0 rounded-4" style={{ backgroundColor: '#ffffff' }}>
-              <h4 className="mb-3 text-center">Daftar Antrian Pasien</h4>
+              <h3 className="mb-3 text-center">Daftar Antrian Pasien</h3>
               <Table striped bordered hover responsive>
                 <thead>
                   <tr className="text-center">

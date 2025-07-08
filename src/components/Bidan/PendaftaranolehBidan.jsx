@@ -14,7 +14,7 @@ const PendaftaranolehBidan = () => {
   });
 
   const navigate = useNavigate();
-  const primaryColor = '#e064ac';
+  const primaryColor = "black";
   const [userType, setUserType] = useState('');
 
 useEffect(() => {

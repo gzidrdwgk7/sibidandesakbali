@@ -13,7 +13,7 @@ import PendaftaranolehBidan from '../Bidan/PendaftaranolehBidan';
 
 
 
-const primaryColor = "#e064ac";
+const primaryColor = "black";
 
 const RiwayatRekamMedis = () => {
   const [selectedPasien, setSelectedPasien] = useState(null);
@@ -59,9 +59,9 @@ const [showModal, setShowModal] = useState(false);
           backgroundColor: '#FFFFFF', overflowY: 'auto', transition: 'width 0.3s',
         }}>
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <h4 className="fw-bold mb-0" style={{ color: primaryColor }}>
+          <h3 className="fw-bold mb-0" style={{ color: primaryColor }}>
             {sidebarOpen ? "Pemeriksaan" : ""}
-          </h4>
+          </h3>
           <button className="btn btn-link"
             onClick={() => setSidebarOpen(!sidebarOpen)}
             style={{ color: primaryColor, fontSize: "20px" }}>
@@ -163,7 +163,7 @@ const [showModal, setShowModal] = useState(false);
           {selectedPasien ? (
             <div ref={printRef}>
               <Card className="p-4 mb-4">
-                <h5 className="fw-bold mb-3">Data Pasien</h5>
+                <h3 className="fw-bold mb-3">Data Pasien</h3>
                 <p><strong>Nama:</strong> {selectedPasien.nama}</p>
                 <p><strong>Nomor WA:</strong> {selectedPasien.whatsapp}</p>
                 <p><strong>Layanan:</strong> {selectedPasien.layanan}</p>
@@ -173,7 +173,7 @@ const [showModal, setShowModal] = useState(false);
               </Card>
 
               <Card className="p-4 mb-4">
-                <h5 className="fw-bold mb-3">Pemeriksaan</h5>
+                <h3 className="fw-bold mb-3">Pemeriksaan</h3>
                 <p><strong>Tanggal:</strong> 2025-06-10</p>
                 <p><strong>Diagnosa:</strong> Kehamilan normal</p>
                 <p><strong>Tekanan Darah:</strong> 110/70</p>
@@ -181,7 +181,7 @@ const [showModal, setShowModal] = useState(false);
               </Card>
 
               <Card className="p-4 mb-4">
-                <h5 className="fw-bold mb-3">Persalinan</h5>
+                <h3 className="fw-bold mb-3">Persalinan</h3>
                 <p><strong>Tanggal:</strong> 2025-08-01</p>
                 <p><strong>Jenis:</strong> Normal</p>
                 <p><strong>Tempat:</strong> Klinik Bidan Desak</p>
@@ -190,7 +190,7 @@ const [showModal, setShowModal] = useState(false);
               </Card>
 
               <Card className="p-4 mb-4">
-                <h5 className="fw-bold mb-3">Pasca Persalinan</h5>
+                <h3 className="fw-bold mb-3">Pasca Persalinan</h3>
                 <p><strong>Tanggal:</strong> 2025-08-04</p>
                 <p><strong>Lochia:</strong> Merah segar</p>
                 <p><strong>Laktasi:</strong> Lancar</p>
@@ -198,7 +198,7 @@ const [showModal, setShowModal] = useState(false);
               </Card>
 
               <Card className="p-4 mb-4">
-                <h5 className="fw-bold mb-3">Imunisasi Bayi</h5>
+                <h3 className="fw-bold mb-3">Imunisasi Bayi</h3>
                 <ul>
                   <li>HB-0 – 2025-08-02</li>
                   <li>BCG – 2025-08-15</li>

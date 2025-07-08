@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa";
 import PendaftaranolehBidan from './PendaftaranolehBidan';
 
-const primaryColor = "#e064ac";
+const primaryColor = "black";
 
 const RekamMedis = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -55,9 +55,9 @@ const RekamMedis = () => {
         backgroundColor: '#FFFFFF', overflowY: 'auto', transition: 'width 0.3s',
       }}>
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <h4 className="fw-bold mb-0" style={{ color: primaryColor }}>
+          <h3 className="fw-bold mb-0" style={{ color: primaryColor }}>
             {sidebarOpen ? "Pemeriksaan" : ""}
-          </h4>
+          </h3>
           <button className="btn btn-link" onClick={() => setSidebarOpen(!sidebarOpen)} style={{ color: primaryColor, fontSize: "20px" }}>
             <FaBars />
           </button>

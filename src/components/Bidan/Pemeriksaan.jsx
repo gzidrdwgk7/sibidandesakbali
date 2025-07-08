@@ -13,13 +13,13 @@ const Pemeriksaan = () => {
   const [step, setStep] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showModal, setShowModal] = useState(false);  // Menambahkan state untuk kontrol modal
-  const primaryColor = '#e064ac';
+  const primaryColor = "black";
   
   const [isValid, setIsValid] = useState(true);
   
 const nextStep = () => {
   if (validateForm()) {
-    if (step === 9) {
+    if (step === 8) {
       const currentStep9Data = {
         bio: bio,
         psiko: psiko,
@@ -128,9 +128,9 @@ useEffect(() => {
           backgroundColor: '#FFFFFF', overflowY: 'auto', transition: 'width 0.3s',
         }}>
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <h4 className="fw-bold mb-0" style={{ color: primaryColor }}>
+          <h3 className="fw-bold mb-0" style={{ color: primaryColor }}>
             {sidebarOpen ? "Pemeriksaan" : ""}
-          </h4>
+          </h3>
           <button className="btn btn-link"
             onClick={() => setSidebarOpen(!sidebarOpen)}
             style={{ color: primaryColor, fontSize: "20px" }}>
@@ -216,7 +216,7 @@ useEffect(() => {
 <div className="shadow-lg p-4 border-0 rounded-4 bg-white">
 {step === 1 && (
         <>
-          <h4 className="mb-4">I. IDENTITAS IBU DAN SUAMI</h4>
+          <h3 className="mb-4">I. IDENTITAS IBU DAN SUAMI</h3>
           <Form>
             <Row className="mb-3">
             <Col><Form.Label>Hari</Form.Label><Form.Control type="text" value={currentDateTime.day} disabled /></Col>
@@ -476,7 +476,7 @@ useEffect(() => {
       )}
   {step === 2 && (
     <>
-      <h4 className="mb-4">II. ALASAN DATANG KE PELAYANAN KESEHATAN</h4>
+      <h3 className="mb-4">II. ALASAN DATANG KE PELAYANAN KESEHATAN</h3>
 
       <Form>
       <Row className="mb-3">
@@ -517,7 +517,7 @@ useEffect(() => {
   )}
   {step === 3 && (
   <>
-    <h4 className="mb-4">III. RIWAYAT MENSTRUASI</h4>
+    <h3 className="mb-4">III. RIWAYAT MENSTRUASI</h3>
 
     <Form>
       <Row className="mb-3">
@@ -552,7 +552,7 @@ useEffect(() => {
 )}
 {step === 4 && (
   <>
-    <h4 className="mb-4">IV. RIWAYAT PERKAWINAN</h4>
+    <h3 className="mb-4">IV. RIWAYAT PERKAWINAN</h3>
 
     <Form>
     <Row className="mb-3">
@@ -591,7 +591,7 @@ useEffect(() => {
 )}
 {step === 5 && (
   <>
-    <h4 className="mb-4">V. RIWAYAT KEHAMILAN, PERSALINAN, DAN KEADAAN BAYI</h4>
+    <h3 className="mb-4">V. RIWAYAT KEHAMILAN, PERSALINAN, DAN KEADAAN BAYI</h3>
     <Form>
   <Row className="mb-3">
     <Col md={6}>
@@ -699,7 +699,7 @@ useEffect(() => {
 )}
 {step === 6 && (
   <>
-    <h4 className="mb-4">VI. RIWAYAT KEHAMILAN SEKARANG</h4>
+    <h3 className="mb-4">VI. RIWAYAT KEHAMILAN SEKARANG</h3>
 
     <Form>
 
@@ -816,7 +816,7 @@ useEffect(() => {
 )}
 {step === 7 && (
   <>
-    <h4 className="mb-4">VII. RIWAYAT KESEHATAN</h4>
+    <h3 className="mb-4">VII. RIWAYAT KESEHATAN</h3>
  <Row className="mb-3">
         <Col md={12}>
           <Form.Label>Bernafas</Form.Label>
@@ -907,24 +907,21 @@ useEffect(() => {
 )}
 {step === 8 && (
   <>
-    <h4 className="mb-4">VIII. RIWAYAT KELUARGA BERENCANA</h4>
+    <h3 className="mb-4">VIII. DIAGNOSIS DAN MASALAH</h3>
 
     <Form>
       <Row className="mb-3">
-        <Col md={6}>
-          <Form.Label>Metode KB yang pernah dipakai</Form.Label>
-          <Form.Control placeholder="Contoh: Pil, suntik, implan, IUD, dll" />
+        <Col md={12}>
+          <Form.Label>Diagnosis</Form.Label>
+          <Form.Control placeholder="Isi hasil diagnosis" />
         </Col>
-        <Col md={6}>
-          <Form.Label>Lama</Form.Label>
-          <Form.Control placeholder="Contoh: 2 tahun" />
-        </Col>
+      
       </Row>
 
       <Row className="mb-3">
         <Col md={12}>
-          <Form.Label>Komplikasi / efek samping dari KB</Form.Label>
-          <Form.Control as="textarea" rows={3} placeholder="Contoh: Pusing, mual, haid tidak teratur, dll" />
+          <Form.Label>Masalah</Form.Label>
+          <Form.Control as="textarea" rows={3} placeholder="Isi masalah jika ada" />
         </Col>
       </Row>
 
@@ -932,8 +929,8 @@ useEffect(() => {
       <Button variant="secondary" onClick={prevStep}>
       Kembali
     </Button>
-    <Button variant="primary" onClick={nextStep}>
-      Lanjutkan
+    <Button variant="success" onClick={nextStep}>
+      Simpan
     </Button>
     </div>
     </Form>
@@ -941,7 +938,7 @@ useEffect(() => {
 )}
 {step === 9 && (
   <>
-    <h4 className="mb-4">IX. DIAGNOSIS DAN MASALAH</h4>
+    <h3 className="mb-4">IX. DIAGNOSIS DAN MASALAH</h3>
     <Form>
       <Row className="mb-3">
         <Col>
